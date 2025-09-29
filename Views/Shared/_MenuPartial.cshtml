@@ -1,0 +1,50 @@
+@model List<Bazsoft_ERP.Models.MenuItem>
+
+@{
+    var titulos = Model.Where(m => m.Menu_Tipo == 1).ToList();
+    var opciones = Model.Where(m => m.Menu_Tipo == 2).ToList();
+}
+
+@foreach (var titulo in titulos)
+{
+       var subOpciones = opciones
+       .Where(o => o.Menu_id.ToString().Substring(1, 6).Contains(titulo.Menu_id?.Substring(1, 6) ?? "")==true)
+       .ToList(); 
+
+    if (subOpciones.Any())
+    {
+        <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                    @titulo.Menu_Descrip
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                @foreach (var opcion in subOpciones)
+                {
+                    <li class="nav-item">
+                        @{
+                            var accion = "Index";
+                            var controlador = "Home";
+                            if (!string.IsNullOrEmpty(opcion.Menu_url_web) && opcion.Menu_url_web.Contains("/"))
+                            {
+                                var partes = opcion.Menu_url_web.Split('/');
+                                controlador = partes[0];
+                                accion = partes.Length > 1 ? partes[1] : "Index";
+                            }
+ 
+                        }
+                        <a href="@Url.Action(accion, controlador)" class="nav-link">
+
+                            @*  <a href="@Url.Action(opcion.Menu_url_web)" class="nav-link"> *@
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>@opcion.Menu_Descrip</p>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </li>
+    }
+}

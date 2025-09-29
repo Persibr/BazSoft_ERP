@@ -1,0 +1,57 @@
+@model Bazsoft_ERP.Models.UsuarioLogon
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>Login | Sistema de Pedidos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSS -->
+    <link rel="stylesheet" href="~/adminlte/dist/css/adminlte.min.css" />
+    <link rel="stylesheet" href="~/adminlte/plugins/fontawesome-free/css/all.min.css" />
+</head>
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <b>BazSoft</b>ERP
+        </div>
+        <div class="card">
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">Inicia sesión para continuar</p>
+                <form asp-action="Login" method="post">
+                    <div class="input-group mb-3">
+                        <input asp-for="UsuarioLogin" class="form-control" placeholder="Usuario" />
+                        <div class="input-group-append">
+                            <div class="input-group-text"><span class="fas fa-user"></span></div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input asp-for="Clave" class="form-control" type="password" placeholder="Contraseña" />
+                        <div class="input-group-append">
+                            <div class="input-group-text"><span class="fas fa-lock"></span></div>
+                        </div>
+                    </div>
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="alert alert-danger">@ViewBag.Error</div>
+                    }
+                    <div class="row">
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<!-- JS -->
+<script src="~/adminlte/plugins/jquery/jquery.min.js"></script>
+<script src="~/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/adminlte/dist/js/adminlte.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+@model List<Bazsoft_ERP.Models.MenuItem>
+
+
+<!-- DataTables CSS -->
+@* <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css"> *@
+
+ 
+
+<h2>Lista de Menús</h2>
+<a class="btn btn-primary mb-3" asp-action="Crear">Nuevo Menú</a>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Descripción</th>
+            <th>Tipo</th>
+            <th>Acción</th>
+            <th>Opción</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Menu_id</td>
+                <td>@item.Menu_Descrip</td>
+                <td>@item.Menu_Tipo</td>
+                <td>@item.Menu_Accion</td>
+                <td>@item.Menu_Opcion</td>
+                <td>@item.Menu_Estado</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

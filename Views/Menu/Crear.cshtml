@@ -1,0 +1,34 @@
+@model Bazsoft_ERP.Models.MenuItem
+
+<h2>Nuevo Menú</h2>
+
+<form asp-action="Crear" method="post">
+    <div class="form-group">
+        <label>ID</label>
+        <input asp-for="Menu_id" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label>Descripción</label>
+        <input asp-for="Menu_Descrip" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Tipo</label>
+        <select asp-for="Menu_Tipo" class="form-control">
+            <option value="1">Título</option>
+            <option value="2">Opción</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Acción</label>
+        <input asp-for="Menu_Accion" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Opción</label>
+        <input asp-for="Menu_Opcion" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Estado</label>
+        <input asp-for="Menu_Estado" class="form-control" value="0" />
+    </div>
+    <button type="submit" class="btn btn-success">Guardar</button>
+</form>

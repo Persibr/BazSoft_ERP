@@ -1,0 +1,413 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+
+<!-- Main content -->
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6">
+
+                <div class="card">
+
+                    <div class="card shadow-sm">
+                        <div class="card-header text-center bg-primary text-white py-2">
+                            <strong>Reporte Resumen del Dia</strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-row justify-content-center mb-3">
+                                <div class="form-group col-auto text-center">
+                                    <label class="font-weight-bold small">Fecha Reporte</label>
+                                    <input type="date" name="FechaDesde" class="form-control form-control-sm"
+                                           style="width: 150px;" value="@ViewBag.FechaDesde" required />
+                                </div>
+                                <div class="form-group col-auto text-center">
+                                    <label for="Vendedores" class="font-weight-bold small">Producto</label>
+                                    <select asp-items="ViewBag.TipoConsulta" name="TipoConsulta" class="form-control form-control-sm" style="width: 180px;">
+                                        <option value="">[Seleccione]</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-auto text-center align-self-end">
+                                    <button type="submit" class="btn btn-sm btn-success px-4" onclick="CargarReporte()">
+                                        Buscar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="card-body">
+                        <div class="mb-2 text-danger font-weight-bold">
+                            Peso Sobrante Ayer: <span class="float-right">Kg. <span id="peso-sobra-ayer">0</span></span>
+                        </div>
+                        <div class="mb-2 text-danger font-weight-bold">
+                            Peso Comprado: <span class="float-right">Kg. <span id="peso-comprado">0</span></span>
+                        </div>
+                        <div class="mb-2 text-success font-weight-bold">
+                            Peso Total Comprado: <span class="float-right">Kg. <span id="peso-total-comprado">0</span></span>
+                        </div>
+                        <div class="mb-2 text-danger font-weight-bold">
+                            Peso Sobrante Hoy: <span class="float-right">Kg. <span id="peso-sobra-hoy">0</span></span>
+                        </div>
+                        <div class="mb-2 text-cyan font-weight-bold">
+                            Peso Vendido: <span class="float-right">Kg. <span id="peso-vendido">0</span> <small id="ratio-peso">(0.9653)</small></span>
+                        </div>
+                        <div class="mb-2 text-success font-weight-bold">
+                            Peso Total Dia: <span class="float-right">Kg. <span id="peso-total-hoy">0</span></span>
+                        </div>
+                        <div class="mb-2 text-warning font-weight-bold">
+                            Importe Vendido: <span class="float-right">S/. <span id="importe-vendido">0</span></span>
+                        </div>
+                        <div class="mb-2 text-primary font-weight-bold">
+                            Importe Cobrado: <span class="float-right">S/. <span id="importe-cobrado">0</span> <small id="ratio-cobro">(0.6914)</small></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- /.col-md-6 -->
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header border-0">
+                        <div class="d-flex justify-content-between">
+                            <h3 class="card-title">Ventas vs. Cobranzas x Dia</h3>
+                            @* <a href="javascript:void(0);">View Report</a> *@
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <p class="d-flex flex-column">
+                                <span class="text-bold text-lg">Total S/</span>
+                                @*<span>Cobranzas por Fecha</span>*@
+                            </p>
+                            <p class="ml-auto d-flex flex-column text-right">
+                                @* <span class="text-success">
+									<i class="fas fa-arrow-up"></i>
+								</span>
+								<span class="text-muted">Últimos movimientos</span> *@
+                            </p>
+                        </div>
+
+                        <div class="position-relative mb-4">
+                            <canvas id="sales-chart" height="400"></canvas>
+                        </div>
+
+                        <div class="d-flex flex-row justify-content-end">
+                            <span class="mr-2">
+                                <i class="fas fa-square text-yellow"></i> Ventas
+                            </span>
+                            <span>
+                                <i class="fas fa-square text-primary"></i> Cobranzas
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header border-0">
+                        <div class="d-flex justify-content-between">
+                            <h3 class="card-title">Ventas vs. Cobranzas x Vendedor</h3>
+                            @* <a href="javascript:void(0);">View Report</a> *@
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <p class="d-flex flex-column">
+                                <span class="text-bold text-lg">Total S/</span>
+                                @*<span>Cobranzas por Fecha</span>*@
+                            </p>
+                            <p class="ml-auto d-flex flex-column text-right">
+                                @* <span class="text-success">
+									<i class="fas fa-arrow-up"></i>
+								</span>
+								<span class="text-muted">Últimos movimientos</span> *@
+                            </p>
+                        </div>
+
+                        <div class="position-relative mb-5">
+                            @*<button class="btn btn-sm btn-primary position-absolute"
+                                    style="top: 5px; right: 5px;"
+                                    onclick="descargarGrafico()">
+                                Descargar
+                            </button>*@
+                            <canvas id="cobra-chart" height="400"></canvas>
+                        </div>
+
+                        <div class="d-flex flex-row justify-content-end">
+                            <span class="mr-2">
+                                <i class="fas fa-square text-yellow"></i> Ventas
+                            </span>
+                            <span>
+                                <i class="fas fa-square text-primary"></i> Cobranzas
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-md-6 -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /.content -->
+@* <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> *@
+
+@section Scripts {
+    <script src="~/adminlte/plugins/chart.js/Chart.min.js"></script>
+    <script>
+
+        const ticksStyle = {
+            fontColor: '#495057',
+            fontStyle: 'bold'
+        };
+
+        let salesChartInstance = null;
+        let cobraChartInstance = null;
+
+        function descargarGrafico() {
+            const canvas = document.getElementById("cobra-chart");
+            const enlace = document.createElement("a");
+            enlace.href = canvas.toDataURL("image/png"); // Exporta como imagen PNG
+            enlace.download = "grafico.png";
+            enlace.click();
+        }
+
+        function CargarReporte(){
+
+             const valor = document.querySelector('select[name="TipoConsulta"]').value;
+             const fechaActual =  document.querySelector('input[name="FechaDesde"]').value;
+
+            cargarReporteResumen(fechaActual, valor);
+
+                const $salesChart = $('#sales-chart');
+                const fecha = fechaActual.replace(/-/g,"");
+
+                // const fecha = document.querySelector('input[name="FechaDesde"]').value;
+
+                $.ajax({
+                    url: '@Url.Action("GraficoCobranzas", "Dashboard")',
+                    type: 'POST',
+                    success: function (data) {
+                        // const labels = data.map(x => {
+                        // 	let fecha = new Date(x.rec_fecEmision);
+                        // 	return fecha.toLocaleDateString('es-PE');
+                        // });
+
+                        const labels= data.map(x => x.rec_fecEmision);
+                        const valores = data.map(x => x.importe);
+                        const ventas = data.map(x => x.ventas);
+                        if (salesChartInstance) {
+                            salesChartInstance.destroy();
+                        }
+                        salesChartInstance = new Chart($salesChart, {
+
+                            type: 'bar',
+                            data: {
+                                labels: labels,
+                                datasets: [
+                                    {
+                                        backgroundColor: '#ffd966',
+                                        borderColor: '#ffd966',
+                                        data: ventas
+                                    },
+                                    {
+                                        backgroundColor: '#007bff',
+                                        borderColor: '#007bff',
+                                        data: valores
+                                    }
+                                ]
+                            },
+                            options: {
+                                maintainAspectRatio: false,
+                                tooltips: {
+                                    mode: 'index',
+                                    intersect: false
+                                },
+                                hover: {
+                                    mode: 'index',
+                                    intersect: false
+                                },
+                                legend: {
+                                    display: false
+                                },
+                                scales: {
+                                    yAxes: [{
+                                        gridLines: {
+                                            display: true,
+                                            lineWidth: '4px',
+                                            color: 'rgba(0, 0, 0, .2)',
+                                            zeroLineColor: 'transparent'
+                                        },
+                                        ticks: $.extend({
+                                            beginAtZero: true,
+                                            callback: function (value) {
+                                                if (value >= 1000) {
+                                                    value /= 1000;
+                                                    value += 'k';
+                                                }
+                                                return 'S/ ' + value;
+                                            }
+                                        }, ticksStyle)
+                                    }],
+                                    xAxes: [{
+                                        gridLines: {
+                                            display: false
+                                        },
+                                        ticks: ticksStyle
+                                    }]
+                                }
+                            }
+                        });
+                    }
+                });
+
+                const $cobraChart = $('#cobra-chart');
+                $.ajax({
+                    url: '@Url.Action("GraficoVendedor", "Dashboard")',
+                    type: 'POST',
+                    data: { fecha: fecha },
+                    success: function (data) {
+                        // const labels = data.map(x => {
+                        // 	let fecha = new Date(x.rec_fecEmision);
+                        // 	return fecha.toLocaleDateString('es-PE');
+                        // });
+
+                        const labels= data.map(x => x.vendedor);
+                        const cobras = data.map(x => x.cobras);
+                        const ventas = data.map(x => x.ventas);
+                         if (cobraChartInstance) {
+                            cobraChartInstance.destroy();
+                        }
+                        cobraChartInstance = new Chart($cobraChart, {
+
+                            type: 'bar',
+                            data: {
+                                labels: labels,
+                                datasets: [
+                                    {
+                                        backgroundColor: '#ffd966',
+                                        borderColor: '#ffd966',
+                                        data: ventas
+                                    },
+                                    {
+                                        backgroundColor: '#007bff',
+                                        borderColor: '#007bff',
+                                        data: cobras
+                                    }
+                                ]
+                            },
+                            options: {
+                                maintainAspectRatio: false,
+                                tooltips: {
+                                    mode: 'index',
+                                    intersect: false
+                                },
+                                hover: {
+                                    mode: 'index',
+                                    intersect: false
+                                },
+                                legend: {
+                                    display: false
+                                },
+                                scales: {
+                                    yAxes: [{
+                                        gridLines: {
+                                            display: true,
+                                            lineWidth: '4px',
+                                            color: 'rgba(0, 0, 0, .2)',
+                                            zeroLineColor: 'transparent'
+                                        },
+                                        ticks: $.extend({
+                                            beginAtZero: true,
+                                            callback: function (value) {
+                                                if (value >= 1000) {
+                                                    value /= 1000;
+                                                    value += 'k';
+                                                }
+                                                return 'S/ ' + value;
+                                            }
+                                        }, ticksStyle)
+                                    }],
+                                    xAxes: [{
+                                        gridLines: {
+                                            display: false
+                                        },
+                                        ticks: ticksStyle
+                                    }]
+                                }
+                            }
+                        });
+                    }
+
+                });
+        }
+
+        $(document).ready(function () {
+            CargarReporte();
+        });
+
+        function cargarReporteResumen(fecha, filtro) {
+                 const urlResumen = '@Url.Action("ObtenerResumenCobranzas", "Dashboard")';
+
+                     $.ajax({
+                            type: "POST",
+                            url: urlResumen,
+                            data: { fecha: fecha, filtro: filtro },
+                            success: function (data) {
+
+                                      if (!data) {
+                                        $('#peso-comprado').text('0');
+                                        $('#peso-vendido').text('0');
+                                        $('#importe-vendido').text('0');
+                                        $('#importe-cobrado').text('0');
+                                        $('#ratio-peso').text('(0.0000)');
+                                        $('#ratio-cobro').text('(0.0000)');
+                                        $('#peso-sobra-ayer').text('0');
+                                        $('#peso-sobra-hoy').text('0');
+                                        $('#peso-total-hoy').text('0');
+                                        $('#peso-total-comprado').text('0');
+                                        return;
+                                    }
+
+                                     // Verificar si realmente existen las propiedades y no son nulas o strings vacíos
+                                    const pesoComprado = parseFloat(data.pesoComprado) || 0;
+                                    const pesoVendido = parseFloat(data.pesoVendido) || 0;
+                                    const importeVendido = parseFloat(data.importeVendido) || 0;
+                                    const importeCobrado = parseFloat(data.importeCobrado) || 0;
+                                    const ratioPeso = parseFloat(data.ratioPeso) || 0;
+                                    const ratioCobro = parseFloat(data.ratioCobro) || 0;
+                                    const pesoSobraAyer = parseFloat(data.pesoSobraAyer) || 0;
+                                    const pesoSobraHoy = parseFloat(data.pesoSobraHoy) || 0;
+                                    const pesoTotalHoy = parseFloat(data.pesoTotalHoy) || 0;
+                                    const pesoTotalComprado = parseFloat(data.pesoTotalComprado) || 0;
+
+                                    $('#peso-comprado').text(pesoComprado.toLocaleString('es-PE'));
+                                    $('#peso-vendido').text(pesoVendido.toLocaleString('es-PE'));
+                                    $('#importe-vendido').text(importeVendido.toLocaleString('es-PE'));
+                                    $('#importe-cobrado').text(importeCobrado.toLocaleString('es-PE'));
+
+                                    $('#ratio-peso').text('(' + ratioPeso.toFixed(4) + ')');
+                                    $('#ratio-cobro').text('(' + ratioCobro.toFixed(4) + ')');
+
+                                    $('#peso-sobra-ayer').text(pesoSobraAyer.toLocaleString('es-PE'));
+                                    $('#peso-sobra-hoy').text(pesoSobraHoy.toLocaleString('es-PE'));
+                                    $('#peso-total-hoy').text(pesoTotalHoy.toLocaleString('es-PE'));
+                                    $('#peso-total-comprado').text(pesoTotalComprado.toLocaleString('es-PE'));
+
+                                },
+                                error: function (xhr, status, error) {
+                                    console.error("ERROR:", status, error);
+                            }
+                     });
+        }
+
+
+    </script>
+}
