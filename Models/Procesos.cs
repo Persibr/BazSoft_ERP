@@ -20,9 +20,21 @@ namespace Bazsoft_ERP.Models
         public string? Hora { get; set; }
         public string? Estado { get; set; }
         public string ? IdNotaCifrado { get; set; }
-        //public List<DetalleCompra> Detalles { get; set; }
+        public List<DetalleRecojo> Detalles { get; set; }
+        public string ? ProcesoActual { get; set; }
     }
-
+    public class DetalleRecojo
+    {
+        public string? IdDet { get; set; }
+        public string? IdDDet { get; set; }
+        public string? IdFactor { get; set; }
+        public string? IdFactorC { get; set; }
+        public string? ProductoId { get; set; }
+        public string? ProductoIdC { get; set; }
+        public string? ProductoTexto { get; set; }
+        public string? Medida { get; set; }
+        public decimal Cantidad { get; set; }
+    }
     public class Procesos
     {
         public int IdNota { get; set; }
@@ -74,24 +86,7 @@ namespace Bazsoft_ERP.Models
         public DateTime FechaHasta { get; set; }
         public int idnota { get; set; }
     }
-   public class DetalleRCompra
-    {
-        public string? IdDet { get; set; }
-        public string? IdDDet { get; set; }
-        public string? ProductoId { get; set; }
-        public string? ProductoTexto { get; set; }
-        public string? TipoJabaId { get; set; }
-        public int CantJab { get; set; }
-        public int UxJ { get; set; }
-        public int TotUnid { get; set; }
-        public decimal PesoNeto { get; set; }
-        public decimal PesoBruto { get; set; }
-        public decimal PN_Despa { get; set; }
-        public decimal PB_Despa { get; set; }
-        public decimal PN_Bonif { get; set; }
-        public decimal PB_Bonif { get; set; }
-        public decimal PN_Facturar { get; set; }
-    }
+   
     public class DetalleRDeleteRequest
     {
         public string? Tipo { get; set; }

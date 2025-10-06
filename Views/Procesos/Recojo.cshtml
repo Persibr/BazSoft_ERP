@@ -78,7 +78,6 @@
         </div>
     </div>
 </section>
-@* @await Html.PartialAsync("_ModRecojo", new Bazsoft_ERP.Models.Recojo()) *@
 <div id="contenedorModalRecojo"></div>
 
 
@@ -91,17 +90,47 @@
     <script>
         let filaEnEdicion = null;
         function nuevoRecojo() {
+            window.modoInfo = false;
             $.get('@Url.Action("RecojoAccion", "Procesos")', function (html) {
                 $("#contenedorModalRecojo").html(html);
                 $("#modalRecojo").modal("show");
             });
-
-        //     $("#formRecojo")[0].reset();
-        //     $("#formRecojo").attr("action", "/Procesos/Recojo"); // acción Create
-        //     $("#formRecojo input[name='Id']").val(""); // limpiar Id
-        //     $("#modalRecojoLabel").text("Nuevo Recojo");
-        //     $("#modalRecojo").modal("show");
+       
         }
+        $(document).on("click", ".btnEditar", function () {
+            window.modoInfo = false;
+            let idNotaC = $(this).attr("Id_NotaC");
+
+            $.get('@Url.Action("RecojoAccion", "Procesos")', { idNota: idNotaC }, function (html) {
+                $("#contenedorModalRecojo").html(html);
+                $("#modalRecojo").modal("show");
+                $("#modalRecojoLabel").text("Editar Recojo");
+            });
+        });
+        // Botón Info
+        $(document).on("click", ".btnInfo", function () {
+            window.modoInfo = true;
+            let idNotaC = $(this).attr("Id_NotaC");
+
+            $.get('@Url.Action("RecojoAccion", "Procesos")', { idNota: idNotaC }, function (html) {
+                $("#contenedorModalRecojo").html(html);
+                $("#modalRecojo").modal("show");
+                $("#modalRecojoLabel").text("Información del Recojo");
+
+                // Hacer todos los inputs, selects y textareas readonly/disabled
+                $("#modalRecojo").find("input, textarea").attr("readonly", true);
+                $("#modalRecojo").find("select").attr("disabled", true);
+
+                // Ocultar botón de grabar si existe
+                $("#modalRecojo").find("button[type='submit']").hide();
+            });
+        });
+
+
+        $(document).on('hidden.bs.modal', '#modalRecojo', function () {
+            $("#contenedorModalRecojo").html(""); // Limpia todo el modal
+        });
+
         $(document).ready(function () {
             var paginaGuardada = parseInt(sessionStorage.getItem('paginaRecojo')) || 0;
             var pageLengthGuardado = parseInt(sessionStorage.getItem('pageLengthRecojo')) || 10;
@@ -110,7 +139,6 @@
                     url: '@Url.Action("ListarRecojosAjax", "Procesos")',
                     type: 'POST',
                     data: function (d) {
-                        // aquí puedes pasar parámetros extra si quieres (por ej. filtros)
                         d.FechaDesde = $("input[name='FechaDesde']").val();
                         d.FechaHasta = $("input[name='FechaHasta']").val();
                     },
@@ -131,7 +159,7 @@
                     { data: "hora" },
                     { data: "guia" },
                     { data: "clientes" },
-                    { data: "estadoHtml", className: "text-center", orderable: false, searchable: false },
+                    { data: "procesoActual", className: "text-center"},
                     { data: "acciones", className: "text-center", orderable: false, searchable: false }
                 ],
                 pageLength: pageLengthGuardado,

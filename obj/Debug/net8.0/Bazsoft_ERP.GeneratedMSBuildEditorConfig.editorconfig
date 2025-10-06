@@ -9,57 +9,57 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Bazsoft_ERP
 build_property.RootNamespace = Bazsoft_ERP
-build_property.ProjectDir = D:\BazSoft-apuntes\Bazsoft_ERP\Bazsoft_ERP\
+build_property.ProjectDir = C:\Users\RKR-LAPTOP\Documents\GitHub\BazSoft_ERP\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = D:\BazSoft-apuntes\Bazsoft_ERP\Bazsoft_ERP
+build_property.MSBuildProjectDirectory = C:\Users\RKR-LAPTOP\Documents\GitHub\BazSoft_ERP
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
-[D:/BazSoft-apuntes/Bazsoft_ERP/Bazsoft_ERP/Views/Dashboard/index.cshtml]
+[C:/Users/RKR-LAPTOP/Documents/GitHub/BazSoft_ERP/Views/Dashboard/index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXGluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/BazSoft-apuntes/Bazsoft_ERP/Bazsoft_ERP/Views/Menu/Crear.cshtml]
+[C:/Users/RKR-LAPTOP/Documents/GitHub/BazSoft_ERP/Views/Menu/Crear.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxDcmVhci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/BazSoft-apuntes/Bazsoft_ERP/Bazsoft_ERP/Views/Menu/Index.cshtml]
+[C:/Users/RKR-LAPTOP/Documents/GitHub/BazSoft_ERP/Views/Menu/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/BazSoft-apuntes/Bazsoft_ERP/Bazsoft_ERP/Views/Procesos/Recojo.cshtml]
+[C:/Users/RKR-LAPTOP/Documents/GitHub/BazSoft_ERP/Views/Procesos/Recojo.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvY2Vzb3NcUmVjb2pvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/BazSoft-apuntes/Bazsoft_ERP/Bazsoft_ERP/Views/Procesos/_ModRecojo.cshtml]
+[C:/Users/RKR-LAPTOP/Documents/GitHub/BazSoft_ERP/Views/Procesos/_ModRecojo.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvY2Vzb3NcX01vZFJlY29qby5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/BazSoft-apuntes/Bazsoft_ERP/Bazsoft_ERP/Views/Shared/_MenuPartial.cshtml]
+[C:/Users/RKR-LAPTOP/Documents/GitHub/BazSoft_ERP/Views/Shared/_MenuPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9NZW51UGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/BazSoft-apuntes/Bazsoft_ERP/Bazsoft_ERP/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/RKR-LAPTOP/Documents/GitHub/BazSoft_ERP/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/BazSoft-apuntes/Bazsoft_ERP/Bazsoft_ERP/Views/UsuarioLogon/Login.cshtml]
+[C:/Users/RKR-LAPTOP/Documents/GitHub/BazSoft_ERP/Views/UsuarioLogon/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb0xvZ29uXExvZ2luLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/BazSoft-apuntes/Bazsoft_ERP/Bazsoft_ERP/Views/_ViewImports.cshtml]
+[C:/Users/RKR-LAPTOP/Documents/GitHub/BazSoft_ERP/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/BazSoft-apuntes/Bazsoft_ERP/Bazsoft_ERP/Views/_ViewStart.cshtml]
+[C:/Users/RKR-LAPTOP/Documents/GitHub/BazSoft_ERP/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/BazSoft-apuntes/Bazsoft_ERP/Bazsoft_ERP/Views/Shared/_Layout.cshtml]
+[C:/Users/RKR-LAPTOP/Documents/GitHub/BazSoft_ERP/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-2dm4a67m4b

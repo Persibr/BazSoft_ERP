@@ -1,6 +1,6 @@
 ﻿@model Bazsoft_ERP.Models.Recojo
 
-<div class="modal fade" id="modalRecojo" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="modalRecojo" tabindex="-1" role="dialog" aria-hidden="true" >
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header py-2">
@@ -24,12 +24,7 @@
                                         <option value="">[Seleccione Cliente]</option>
                                     </select>
                                 </div>
-                                @* <div class="col-md-3">
-                                    <label class="small font-weight-bold">Tipo de Servicio</label>
-                                    <select asp-for="TipoServicio" asp-items="ViewBag.TiposServicio" class="form-control select2bs4 form-control-sm">
-                                        <option value="">[Seleccione Tipo de Servicio]</option>
-                                    </select>
-                                </div> *@
+                              
                             </div>
                             <input type="hidden" name="DetallesJson" id="detallesJson" />
                             <div class="form-row">
@@ -59,7 +54,6 @@
                                 <div class="form-group col-md-3">
                                     <label class="small font-weight-bold">Fecha Guía</label>
                                     <input type="date" asp-for="FechaGuia" class="form-control form-control-sm" />
-                                    @* value="@(ViewBag.fechaGuia ?? DateTime.Today.ToString("yyyy-MM-dd"))" /> *@
                                 </div>
                             </div>
 
@@ -77,33 +71,7 @@
                 </form>
 
                 <hr class="my-3" />
-               @*  <div class="card mb-3">
-                    <div class="card-body py-2">
-                        <div class="form-row">
-                            <div class="form-group col-md-3 mb-1">
-                                <label class="small font-weight-bold">Producto</label>
-                                <select id="productoSelect" name="Producto" asp-items="ViewBag.Productos" class="form-control form-control-sm ">
-                                    <option value="">[Seleccione Producto]</option>
-                                </select>
-                            </div>                            
-                            <div class="form-group col-md-2 mb-1">
-                                <label class="small font-weight-bold">Medida</label>
-                                <input id="unidadMedidainput" type="text" class="form-control form-control-sm text-end" name="Medida"/>
-                            </div>
-                            <div class="form-group col-md-2 mb-1">
-                                <label class="small font-weight-bold">Cantidad</label>
-                                <input id="cantJabInput" type="number" class="form-control form-control-sm text-end" name="CantJab" min="0" />
-                            </div>
-                            <div class="form-group col-md-2 mb-1 d-flex align-items-end justify-content-center">
-                                <button type="button" class="btn btn-success btn-sm mr-1" id="btnAgregarDetalle"><i class="fas fa-check"></i></button>
-                                <button type="button" id="btnCancelarEdicion" class="btn btn-danger btn-sm" title="Cancelar">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div> *@
-
+            
                 <div class="table-responsive">
                     <table id="tablaProductos" class="table table-sm table-bordered table-striped small text-center">
                         <thead class="table-secondary">
@@ -121,26 +89,51 @@
     </div>
 </div>
 <script>
-       const productos = @Html.Raw(ViewBag.ProductosJson);
-       console.log(productos);
+    var productos = @Html.Raw(ViewBag.ProductosJson);
     $('#modalRecojo').on('shown.bs.modal', function () {
+
         const tbody = document.querySelector("#tablaProductos tbody");
         tbody.innerHTML = "";
 
         productos.forEach(p => {
             let row = `
-                <tr data-id="${p.Id}">
+                <tr data-id="${p.Id}" data-factor="${p.IdFactor}"  data-iddet="${p.IdDet}" data-idddet="${p.IdDDet}">
                     <td>${p.Descripcion}</td>
                     <td>${p.Unidad}</td>
                     <td>
                         <input type="number"
-                               class="form-control form-control-sm text-end"
+                               class="form-control form-control-sm text-end cantidad-input"
                                name="Cantidad_${p.Id}"
-                               value="0" min="0" />
+                               value="${p.Cantidad ?? 0}" min="0" ${window.modoInfo ? 'readonly' : ''} />
                     </td>
                 </tr>`;
             tbody.insertAdjacentHTML("beforeend", row);
         });
-    });
 
+    }); 
+
+      // Antes de enviar el form: construir JSON
+    document.getElementById("formRecojo").addEventListener("submit", function (e) {
+        const detalles = [];
+        document.querySelectorAll("#tablaProductos tbody tr").forEach(tr => {
+            const id = tr.getAttribute("data-id");
+            const factor = tr.getAttribute("data-factor");
+            const iddet = tr.getAttribute("data-iddet");
+            const idddet = tr.getAttribute("data-idddet");
+            const cantidad = parseFloat(tr.querySelector(".cantidad-input").value) || 0;
+
+            if (cantidad > 0) {
+                detalles.push({
+                    ProductoIdC: id,
+                    IdDet: iddet,
+                    IdDDet: idddet,
+                    IdFactorC: factor,
+                    Cantidad: cantidad,
+                });
+            }
+        });
+
+        // Guardar en hidden input como JSON
+        document.getElementById("detallesJson").value = JSON.stringify(detalles);
+    });
 </script>
