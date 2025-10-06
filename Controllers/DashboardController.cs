@@ -35,12 +35,12 @@ namespace Bazsoft_ERP.Controllers
                     new SelectListItem { Value = "1", Text = "POLLO" }
                 };
 
-            return View();
+            return View("~/Views/PB600001-Dashboard/Index.cshtml");
         }
 
 
      
-        public ActionResult GraficoCobranzas()
+        public IActionResult GraficoCobranzas()
         {
             var accesos = ObtenerAccesos("PB600001");
             var emp_codigo = accesos[0].emp_codigo;
@@ -59,7 +59,7 @@ namespace Bazsoft_ERP.Controllers
         }
 
         [HttpPost]
-        public ActionResult GraficoVendedor(string fecha)
+        public IActionResult GraficoVendedor(string fecha)
         {
             var accesos = ObtenerAccesos("PB600001");
             var emp_codigo = accesos[0].emp_codigo;
@@ -78,8 +78,7 @@ namespace Bazsoft_ERP.Controllers
         }
 
         [HttpPost]
-
-        public ActionResult ObtenerResumenCobranzas(DateTime fecha, string filtro)
+        public IActionResult ObtenerResumenCobranzas(DateTime fecha, string filtro)
         {
             using (var connection = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
             {
