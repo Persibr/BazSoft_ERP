@@ -1,26 +1,18 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\RKR-LAPTOP\\Documents\\GitHub\\BazSoft_ERP\\",
+  "WorkspaceRootPath": "D:\\Instaladores\\GitHub\\BazSoft_ERP\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4BAC69DC-E58A-44B6-BFB7-23B5702B41E7}|Bazsoft_ERP.csproj|c:\\users\\rkr-laptop\\documents\\github\\bazsoft_erp\\controllers\\procesoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BAC69DC-E58A-44B6-BFB7-23B5702B41E7}|Bazsoft_ERP.csproj|solutionrelative:controllers\\procesoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4BAC69DC-E58A-44B6-BFB7-23B5702B41E7}|Bazsoft_ERP.csproj|d:\\instaladores\\github\\bazsoft_erp\\controllers\\pb040104controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BAC69DC-E58A-44B6-BFB7-23B5702B41E7}|Bazsoft_ERP.csproj|solutionrelative:controllers\\pb040104controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4BAC69DC-E58A-44B6-BFB7-23B5702B41E7}|Bazsoft_ERP.csproj|c:\\users\\rkr-laptop\\documents\\github\\bazsoft_erp\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BAC69DC-E58A-44B6-BFB7-23B5702B41E7}|Bazsoft_ERP.csproj|solutionrelative:controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4BAC69DC-E58A-44B6-BFB7-23B5702B41E7}|Bazsoft_ERP.csproj|d:\\instaladores\\github\\bazsoft_erp\\views\\pb040104\\_modregistro.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4BAC69DC-E58A-44B6-BFB7-23B5702B41E7}|Bazsoft_ERP.csproj|solutionrelative:views\\pb040104\\_modregistro.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4BAC69DC-E58A-44B6-BFB7-23B5702B41E7}|Bazsoft_ERP.csproj|c:\\users\\rkr-laptop\\documents\\github\\bazsoft_erp\\views\\procesos\\recojo.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4BAC69DC-E58A-44B6-BFB7-23B5702B41E7}|Bazsoft_ERP.csproj|solutionrelative:views\\procesos\\recojo.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4BAC69DC-E58A-44B6-BFB7-23B5702B41E7}|Bazsoft_ERP.csproj|c:\\users\\rkr-laptop\\documents\\github\\bazsoft_erp\\views\\procesos\\_modrecojo.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4BAC69DC-E58A-44B6-BFB7-23B5702B41E7}|Bazsoft_ERP.csproj|solutionrelative:views\\procesos\\_modrecojo.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4BAC69DC-E58A-44B6-BFB7-23B5702B41E7}|Bazsoft_ERP.csproj|c:\\users\\rkr-laptop\\documents\\github\\bazsoft_erp\\models\\procesos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BAC69DC-E58A-44B6-BFB7-23B5702B41E7}|Bazsoft_ERP.csproj|solutionrelative:models\\procesos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4BAC69DC-E58A-44B6-BFB7-23B5702B41E7}|Bazsoft_ERP.csproj|d:\\instaladores\\github\\bazsoft_erp\\views\\pb040104\\registro.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4BAC69DC-E58A-44B6-BFB7-23B5702B41E7}|Bazsoft_ERP.csproj|solutionrelative:views\\pb040104\\registro.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,68 +22,49 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 3,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "DashboardController.cs",
-              "DocumentMoniker": "C:\\Users\\RKR-LAPTOP\\Documents\\GitHub\\BazSoft_ERP\\Controllers\\DashboardController.cs",
-              "RelativeDocumentMoniker": "Controllers\\DashboardController.cs",
-              "ToolTip": "C:\\Users\\RKR-LAPTOP\\Documents\\GitHub\\BazSoft_ERP\\Controllers\\DashboardController.cs",
-              "RelativeToolTip": "Controllers\\DashboardController.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAAwFAAAAAQAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-06T14:48:31.465Z",
+              "Title": "_ModRegistro.cshtml",
+              "DocumentMoniker": "D:\\Instaladores\\GitHub\\BazSoft_ERP\\Views\\PB040104\\_ModRegistro.cshtml",
+              "RelativeDocumentMoniker": "Views\\PB040104\\_ModRegistro.cshtml",
+              "ToolTip": "D:\\Instaladores\\GitHub\\BazSoft_ERP\\Views\\PB040104\\_ModRegistro.cshtml",
+              "RelativeToolTip": "Views\\PB040104\\_ModRegistro.cshtml",
+              "ViewState": "AgIAAAkCAAAAAAAAAAAcwCICAABTAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-17T19:38:14.431Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Recojo.cshtml",
-              "DocumentMoniker": "C:\\Users\\RKR-LAPTOP\\Documents\\GitHub\\BazSoft_ERP\\Views\\Procesos\\Recojo.cshtml",
-              "RelativeDocumentMoniker": "Views\\Procesos\\Recojo.cshtml",
-              "ToolTip": "C:\\Users\\RKR-LAPTOP\\Documents\\GitHub\\BazSoft_ERP\\Views\\Procesos\\Recojo.cshtml",
-              "RelativeToolTip": "Views\\Procesos\\Recojo.cshtml",
-              "ViewState": "AgIAAGMAAAAAAAAAAAAgwG8AAAAjAAAAAAAAAA==",
+              "Title": "Registro.cshtml",
+              "DocumentMoniker": "D:\\Instaladores\\GitHub\\BazSoft_ERP\\Views\\PB040104\\Registro.cshtml",
+              "RelativeDocumentMoniker": "Views\\PB040104\\Registro.cshtml",
+              "ToolTip": "D:\\Instaladores\\GitHub\\BazSoft_ERP\\Views\\PB040104\\Registro.cshtml",
+              "RelativeToolTip": "Views\\PB040104\\Registro.cshtml",
+              "ViewState": "AgIAAAYBAAAAAAAAAAAAwBIBAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-01T23:19:54.183Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Procesos.cs",
-              "DocumentMoniker": "C:\\Users\\RKR-LAPTOP\\Documents\\GitHub\\BazSoft_ERP\\Models\\Procesos.cs",
-              "RelativeDocumentMoniker": "Models\\Procesos.cs",
-              "ToolTip": "C:\\Users\\RKR-LAPTOP\\Documents\\GitHub\\BazSoft_ERP\\Models\\Procesos.cs",
-              "RelativeToolTip": "Models\\Procesos.cs",
-              "ViewState": "AgIAAAIAAAAAAAAAAAAlwAsAAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-01T05:59:25.74Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "_ModRecojo.cshtml",
-              "DocumentMoniker": "C:\\Users\\RKR-LAPTOP\\Documents\\GitHub\\BazSoft_ERP\\Views\\Procesos\\_ModRecojo.cshtml",
-              "RelativeDocumentMoniker": "Views\\Procesos\\_ModRecojo.cshtml",
-              "ToolTip": "C:\\Users\\RKR-LAPTOP\\Documents\\GitHub\\BazSoft_ERP\\Views\\Procesos\\_ModRecojo.cshtml",
-              "RelativeToolTip": "Views\\Procesos\\_ModRecojo.cshtml",
-              "ViewState": "AgIAAFcAAAAAAAAAAAAAAGoAAABmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-09-30T14:19:25.981Z"
+              "WhenOpened": "2025-10-13T18:20:14.912Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "ProcesosController.cs",
-              "DocumentMoniker": "C:\\Users\\RKR-LAPTOP\\Documents\\GitHub\\BazSoft_ERP\\Controllers\\ProcesosController.cs",
-              "RelativeDocumentMoniker": "Controllers\\ProcesosController.cs",
-              "ToolTip": "C:\\Users\\RKR-LAPTOP\\Documents\\GitHub\\BazSoft_ERP\\Controllers\\ProcesosController.cs",
-              "RelativeToolTip": "Controllers\\ProcesosController.cs",
-              "ViewState": "AgIAAFABAAAAAAAAAAAkwFQBAAA/AAAAAAAAAA==",
+              "Title": "PB040104Controller.cs",
+              "DocumentMoniker": "D:\\Instaladores\\GitHub\\BazSoft_ERP\\Controllers\\PB040104Controller.cs",
+              "RelativeDocumentMoniker": "Controllers\\PB040104Controller.cs",
+              "ToolTip": "D:\\Instaladores\\GitHub\\BazSoft_ERP\\Controllers\\PB040104Controller.cs",
+              "RelativeToolTip": "Controllers\\PB040104Controller.cs",
+              "ViewState": "AgIAAC8BAAAAAAAAAAAAwDUBAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-30T14:19:15.593Z",
+              "WhenOpened": "2025-10-13T16:19:19.568Z",
               "EditorCaption": ""
             }
           ]

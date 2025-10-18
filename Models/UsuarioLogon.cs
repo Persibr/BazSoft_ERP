@@ -8,6 +8,7 @@ namespace Bazsoft_ERP.Models
         public string? Clave { get; set; }         // input
         public string? Rol { get; set; }
         public string? Menu_url_web { get; set; }
+        public string ? User_Logon { get; set; }
 
     }
    

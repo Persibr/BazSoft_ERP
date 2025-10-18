@@ -2092,23 +2092,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\RKR-LAPTOP\\.nuget\\packages\\": {},
+    "C:\\Users\\INVRKR-PC\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\RKR-LAPTOP\\Documents\\GitHub\\BazSoft_ERP\\Bazsoft_ERP.csproj",
+      "projectUniqueName": "D:\\Instaladores\\GitHub\\BazSoft_ERP\\Bazsoft_ERP.csproj",
       "projectName": "Bazsoft_ERP",
-      "projectPath": "C:\\Users\\RKR-LAPTOP\\Documents\\GitHub\\BazSoft_ERP\\Bazsoft_ERP.csproj",
-      "packagesPath": "C:\\Users\\RKR-LAPTOP\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\RKR-LAPTOP\\Documents\\GitHub\\BazSoft_ERP\\obj\\",
+      "projectPath": "D:\\Instaladores\\GitHub\\BazSoft_ERP\\Bazsoft_ERP.csproj",
+      "packagesPath": "C:\\Users\\INVRKR-PC\\.nuget\\packages\\",
+      "outputPath": "D:\\Instaladores\\GitHub\\BazSoft_ERP\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\RKR-LAPTOP\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\INVRKR-PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -2181,7 +2181,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.302/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

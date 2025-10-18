@@ -21,7 +21,18 @@ namespace Bazsoft_ERP.Models
         public string? Estado { get; set; }
         public string ? IdNotaCifrado { get; set; }
         public List<DetalleRecojo> Detalles { get; set; }
-        public string ? ProcesoActual { get; set; }
+        public string ? IdProceso{ get; set; }
+        public string? ProcesoActual { get; set; }
+
+        public string RecojoHora { get; set; }
+        public string RecepcionHora { get; set; }
+        public string LavadoHora { get; set; }
+        public string SecadoHora { get; set; }
+        public string PlanchadoHora { get; set; }
+        public string DobladoHora { get; set; }
+        public string EmbolsadoHora { get; set; }
+        public string DespachoHora { get; set; }
+        public string EntregadoHora { get; set; }
     }
     public class DetalleRecojo
     {

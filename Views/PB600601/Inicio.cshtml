@@ -1,0 +1,236 @@
+﻿@model Bazsoft_ERP.Models.Recojo
+@{
+    ViewBag.Title = "Recojo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var Registrar = ViewBag.Registrar;
+    var Editar = ViewBag.Editar;
+    var Anular = ViewBag.Anular;
+    var Imprimir = ViewBag.Imprimir;
+    var Fecha = ViewBag.Fecha;
+}
+@section Styles {
+    <link rel="stylesheet" href="~/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/adminlte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <link href="~/adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css" rel="stylesheet" />
+    <style>
+        #tablaRecojo .proceso {
+            white-space: nowrap; /* evita que se rompa la línea */
+            width: 1%;
+        }
+
+        td span {
+            display: block; /* ocupa todo el td */
+            width: 100%; /* ancho completo */
+            height: 100%; /* altura completa */
+            text-align: center; /* centrado del texto */
+            border-radius: 3px; /* redondeo opcional */
+        }
+        /* Resaltado de procesos */
+        span.completado {
+            background-color: #d4edda;
+            padding: 2px 5px;
+            border-radius: 3px;
+            display: inline-block;
+        }
+
+        span.activo {
+            background-color: #007bff;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+
+    </style>
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="mb-0 text-secondary font-weight-bold">Listado de Recojos</h4>
+
+            <div class="d-flex gap-2">                
+                <button type="button" class="btn btn-outline-success btn-sm" onclick="nuevoRecojo()">
+                    <i class="fas fa-plus"></i> Exportar
+                </button>               
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="card card-outline card-secondary shadow-sm">
+        <div class="card-header py-2">
+            <h6 class="mb-0 text-muted">Filtros de búsqueda</h6>
+        </div>
+        <div class="card-body py-2">
+            <form asp-controller="Procesos" asp-action="Inicio" method="post" class="form-row align-items-end">
+
+                <div class="form-group col-md-2 mb-2">
+                    <label for="fecha" class="small font-weight-bold">Fecha Desde</label>
+                    <input type="date" name="FechaDesde" class="form-control form-control-sm" value="@ViewBag.FechaDesde" required />
+                </div>
+
+                <div class="form-group col-md-2 mb-2">
+                    <label for="fecha" class="small font-weight-bold">Fecha Hasta</label>
+                    <input type="date" name="FechaHasta" class="form-control form-control-sm" value="@ViewBag.FechaHasta" required />
+                </div>
+
+                <div class="form-group col-md-2 mb-2">
+                    <label for="Clientes" class="small font-weight-bold">Clientes</label>
+                    <select asp-items="ViewBag.Clientes" name="Cliente" class="form-control select2bs4">
+                        <option value="">[Todos los Clientes]</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-2 text-right mb-2">
+                    <button type="submit" class="btn btn-primary btn-sm btn-block">
+                        <i class="fas fa-search"></i> Buscar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<section class="content mt-3">
+    <div class="card shadow-sm">
+        <div class="card-body p-2">
+            <div class="table-responsive">
+                <table class="table table-sm table-bordered table-hover table-striped" id="tablaRecojo" style="width:100%">
+                    <thead class="table-primary text-center">
+                        <tr>
+                            <th>Guía</th>
+                            <th>Cliente</th>
+                            <th>Recojo</th>
+                            <th>Recepción</th>
+                            <th>Lavado</th>
+                            <th>Secado</th>
+                            <th>Planchado</th>
+                            <th>Doblado</th>
+                            <th>Embolsado</th>
+                            <th>Despacho</th>
+                            <th>Entregado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>      
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<div id="contenedorModalRecojo"></div>
+
+
+@section Scripts
+{
+    <script src="~/adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script>
+        // Botón Info
+        $(document).on("click", ".btnInfo", function () {
+            window.modoInfo = true;
+            let idNotaC = $(this).attr("Id_NotaC");
+
+            $.get('@Url.Action("RecojoAccion", "Procesos")', { idNota: idNotaC }, function (html) {
+                $("#contenedorModalRecojo").html(html);
+                $("#modalRecojo").modal("show");
+                $("#modalRecojoLabel").text("Información del Recojo");
+
+                // Hacer todos los inputs, selects y textareas readonly/disabled
+                $("#modalRecojo").find("input, textarea").attr("readonly", true);
+                $("#modalRecojo").find("select").attr("disabled", true);
+
+                // Ocultar botón de grabar si existe
+                $("#modalRecojo").find("button[type='submit']").hide();
+            });
+        });
+
+
+        $(document).on('hidden.bs.modal', '#modalRecojo', function () {
+            $("#contenedorModalRecojo").html(""); // Limpia todo el modal
+        });
+
+        $(document).ready(function () {
+            var paginaGuardada = parseInt(sessionStorage.getItem('paginaRecojoD')) || 0;
+            var pageLengthGuardado = parseInt(sessionStorage.getItem('pageLengthRecojoD')) || 10;
+            var tabla = $('#tablaRecojo').DataTable({
+                ajax: {
+                    url: '@Url.Action("ListarRecojosAjax", "Procesos")',
+                    type: 'POST',
+                    data: function (d) {
+                        d.FechaDesde = $("input[name='FechaDesde']").val();
+                        d.FechaHasta = $("input[name='FechaHasta']").val();
+                    },
+                    beforeSend: function () {
+                        Swal.fire({
+                            title: 'Cargando...',
+                            html: 'Espere un momento',
+                            allowOutsideClick: false,
+                            didOpen: () => Swal.showLoading()
+                        });
+                    },
+                    complete: function () {
+                        Swal.close();
+                    }
+                },
+            
+                columns: [
+                    { data: "guia", className: "text-center" },
+                    { data: "clientes", className: "text-center" },
+                    { data: "recojoHora", className: "text-center" , orderable: false, searchable: false },
+                    { data: "recepcionHora", className: "text-center", orderable: false, searchable: false  },
+                    { data: "lavadoHora", className: "text-center" , orderable: false, searchable: false },
+                    { data: "secadoHora", className: "text-center", orderable: false, searchable: false  },
+                    { data: "planchadoHora", className: "text-center", orderable: false, searchable: false  },
+                    { data: "dobladoHora", className: "text-center" , orderable: false, searchable: false },
+                    { data: "embolsadoHora", className: "text-center", orderable: false, searchable: false  },
+                    { data: "despachoHora", className: "text-center", orderable: false, searchable: false  },
+                    { data: "entregadoHora", className: "text-center" , orderable: false, searchable: false },
+                    { data: "acciones", className: "text-center", orderable: false, searchable: false }
+                ],       
+                columnDefs: [
+                    { targets: [2,3,4,5,6,7,8,9,10], className: 'proceso' , width: '5%'  }
+                ],
+                pageLength: pageLengthGuardado,
+                displayStart: paginaGuardada * pageLengthGuardado,
+                responsive: true,
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
+                }
+            });
+            // Guardar estado al cambiar página o cantidad de filas
+            tabla.on('page.dt', function () {
+                var info = tabla.page.info();
+                sessionStorage.setItem('paginaRecojoD', info.page);
+                sessionStorage.setItem('pageLengthRecojoD', info.length);
+            });
+
+            tabla.on('length.dt', function (e, settings, len) {
+                var info = tabla.page.info();
+                sessionStorage.setItem('paginaRecojoD', info.page);
+                sessionStorage.setItem('pageLengthRecojoD', info.length);
+            });
+            // para que al buscar con el formulario refresque la tabla
+            $("form").on("submit", function (e) {
+                e.preventDefault();
+                $('#tablaRecojo').DataTable().ajax.reload();
+            });
+
+
+             $('.select2bs4').select2({
+                theme: 'bootstrap4',
+                placeholder: 'Todos los clientes',
+                allowClear: true
+            });           
+
+        });
+
+
+    </script>
+}

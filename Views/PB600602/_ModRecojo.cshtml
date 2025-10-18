@@ -1,0 +1,178 @@
+﻿@model Bazsoft_ERP.Models.Recojo
+
+<div class="modal fade" id="modalRecojo" tabindex="-1" role="dialog" aria-hidden="true" >
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header py-2">
+                <h6 class="modal-title" id="modalRecojoLabel">Recojo</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form asp-controller="Procesos" asp-action="RecojoAccion" method="post" id="formRecojo">
+                    <input type="hidden" name="IdNota" value="@ViewBag.IdNota" />
+                    <input type="hidden" asp-for="IdNotaCifrado" />
+                    <div class="row">
+                        <div class="col-md-10">
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-3">
+                                    <label class="small font-weight-bold">Fecha de Recojo</label>
+                                    <input type="date" asp-for="FechaRecojo" class="form-control form-control-sm" />
+                                </div>                               
+                                <div class="col-md-5">
+                                    <label class="small font-weight-bold">Cliente</label>
+                                    <select asp-for="Clientes" asp-items="ViewBag.Clientes" class="form-control select2bs4 form-control-sm">
+                                        <option value="">[Seleccione Cliente]</option>
+                                    </select>
+                                </div>
+                              
+                            </div>
+                            <input type="hidden" name="DetallesJson" id="detallesJson" />
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="small font-weight-bold">Vehículo</label>
+                                    <select asp-for="Vehiculos" asp-items="ViewBag.Vehiculos" class="form-control select2bs4 form-control-sm ">
+                                        <option value="">[Seleccione Vehículo]</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label class="small font-weight-bold">Documento</label>
+                                    <select asp-for="Documentos" asp-items="ViewBag.Documentos" class="form-control form-control-sm select2bs4">
+                                        <option value="">[Seleccione Documento]</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label class="small font-weight-bold">Serie</label>
+                                    <input type="text" class="form-control form-control-sm" asp-for="Serie" />
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label class="small font-weight-bold">Correlativo</label>
+                                    <input type="text" class="form-control form-control-sm" asp-for="Correlativo" />
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label class="small font-weight-bold">Fecha Guía</label>
+                                    <input type="date" asp-for="FechaGuia" class="form-control form-control-sm" />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-2 d-flex flex-column align-items-end justify-content-center mt-4">
+                            <button type="submit" class="btn btn-primary btn-sm w-100 mb-2">
+                                <i class="fas fa-save"></i> Grabar Registro
+                            </button>
+                            <button type="button" class="btn btn-danger btn-sm w-100" data-dismiss="modal">
+                                <i class="fas fa-times"></i> Salir
+                            </button>
+                        </div>
+
+                    </div>
+                </form>
+
+                <hr class="my-3" />
+            
+                <div class="table-responsive">
+                    <table id="tablaProductos" class="table table-sm table-bordered table-striped small text-center" style="width:100%">
+                        <thead class="table-secondary">
+                            <tr>
+                                <th>Producto</th>
+                                <th>Medida</th>
+                                <th>Cantidad</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var productos = @Html.Raw(ViewBag.ProductosJson);
+    $('#modalRecojo').on('shown.bs.modal', function () {
+
+        const tbody = document.querySelector("#tablaProductos tbody");
+        tbody.innerHTML = "";
+
+        productos.forEach(p => {
+            let row = `
+                <tr data-id="${p.Id}" data-factor="${p.IdFactor}"  data-iddet="${p.IdDet}" data-idddet="${p.IdDDet}">
+                    <td>${p.Descripcion}</td>
+                    <td>${p.Unidad}</td>
+                    <td>
+                        <input type="number"
+                               class="form-control form-control-sm text-end cantidad-input"
+                               name="Cantidad_${p.Id}"
+                               value="${p.Cantidad ?? 0}" min="0" ${window.modoInfo ? 'readonly' : ''} />
+                    </td>
+                </tr>`;
+            tbody.insertAdjacentHTML("beforeend", row);
+        });
+
+    }); 
+
+    
+      // Antes de enviar el form: construir JSON
+    $(document).off('submit', '#formRecojo').on('submit', '#formRecojo', function (e) {
+        e.preventDefault();
+        const form = this;
+        const detalles = [];
+        const errores = [];
+
+        // VALIDAR CAMPOS DEL FORMULARIO PRINCIPAL
+        const fechaRecojo = document.querySelector('input[name="FechaRecojo"]').value;
+        const clientes = document.querySelector('select[name="Clientes"]').value;
+        const vehiculo = document.querySelector('select[name="Vehiculos"]').value;
+        const documento = document.querySelector('select[name="Documentos"]').value;
+        const serie = document.querySelector('input[name="Serie"]').value.trim();
+        const correlativo = document.querySelector('input[name="Correlativo"]').value.trim();
+        const fechaGuia = document.querySelector('input[name="FechaGuia"]').value;
+
+        if (!fechaRecojo) errores.push("Fecha de Recojo");
+        if (!clientes) errores.push("Cliente");
+        if (!vehiculo) errores.push("Vehículo");
+        if (!documento) errores.push("Documento");
+        if (!serie) errores.push("Serie");
+        if (!correlativo) errores.push("Correlativo");
+        if (!fechaGuia) errores.push("Fecha Guía");
+
+        if (errores.length > 0) {
+            e.preventDefault();
+            Swal.fire({
+                icon: 'warning',
+                title: 'Campos requeridos faltantes',
+                html: `<ul style="text-align:left;">${errores.map(c => `<li>${c}</li>`).join('')}</ul>`,
+                confirmButtonText: 'Aceptar'
+            });
+            return;
+        }
+        document.querySelectorAll("#tablaProductos tbody tr").forEach(tr => {
+            const id = tr.getAttribute("data-id");
+            const factor = tr.getAttribute("data-factor");
+            const iddet = tr.getAttribute("data-iddet");
+            const idddet = tr.getAttribute("data-idddet");
+            const cantidad = parseFloat(tr.querySelector(".cantidad-input").value) || 0;
+
+            if (cantidad > 0) {
+                detalles.push({
+                    ProductoIdC: id,
+                    IdDet: iddet,
+                    IdDDet: idddet,
+                    IdFactorC: factor,
+                    Cantidad: cantidad,
+                });
+            }
+        });
+        if (detalles.length === 0) {
+            e.preventDefault();
+            Swal.fire("Advertencia", "Debe agregar al menos un detalle a la tabla.", "warning");
+            return;
+        }
+
+        // Guardar en hidden input como JSON
+        document.getElementById("detallesJson").value = JSON.stringify(detalles);
+        form.submit();
+    });
+</script>

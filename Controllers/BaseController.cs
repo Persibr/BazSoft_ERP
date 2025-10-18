@@ -1,8 +1,10 @@
-﻿using Dapper;
+﻿using Bazsoft_ERP.Models;
+using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
-using Bazsoft_ERP.Models;
+using System.Data;
 
 public class BaseController : Controller
 {
@@ -56,6 +58,22 @@ public class BaseController : Controller
                 param: parametros,
                 commandType: System.Data.CommandType.StoredProcedure
             ).ToList();
+        }
+    }
+    public IEnumerable<SelectListItem> ObtenerClientes(int? userId)
+    {
+        if (userId == null) return Enumerable.Empty<SelectListItem>();
+
+        using (var connection = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+        {
+            return connection.Query("spWeb_Listar_Clientes_Zona",
+                                    new { UserId = userId },
+                                    commandType: CommandType.StoredProcedure)
+                             .Select(v => new SelectListItem
+                             {
+                                 Value = v.tab_codigo.ToString(),
+                                 Text = v.tab_descri.ToString()
+                             });
         }
     }
 }

@@ -41,6 +41,7 @@ namespace Bazsoft_ERP.Controllers
             {
                 HttpContext.Session.SetInt32("IdUsuario", usuarioLogueado.IdUsuario);
                 HttpContext.Session.SetString("Nombre", usuarioLogueado.Nombre!);
+                HttpContext.Session.SetString("Log", usuarioLogueado.User_Logon!);
                 HttpContext.Session.SetString("Rol", usuarioLogueado.Rol!);
 
                 return RedirectToAction("Index", "Dashboard");

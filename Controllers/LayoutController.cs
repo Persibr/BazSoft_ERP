@@ -8,27 +8,19 @@ namespace Bazsoft_ERP.Controllers
 {
     public class LayoutController : BaseController
     {
-        //private readonly Conexion _conexion;
-
         public LayoutController(IConfiguration config) : base(config)
         {
-            //_conexion = new Conexion(configuration);
         }
 
         [Route("Layout/CargarMenu")]
         public ActionResult CargarMenu()
         {
             int? userId = HttpContext.Session.GetInt32("IdUsuario");
-            if (userId == null)
-            //{
-            //    return RedirectToAction("Login", "UsuarioLogon");
-            //}
+            if (userId == null)            
             {
                 // Enviar instrucción clara al cliente
                  return Unauthorized();
             }
-
-
             var parametros = new DynamicParameters();
             parametros.Add("@UserId", userId);
 
