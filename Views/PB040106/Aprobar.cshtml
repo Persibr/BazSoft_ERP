@@ -1,0 +1,291 @@
+﻿@model Bazsoft_ERP.Models.Requerimiento
+@{
+    ViewBag.Title = "Recojo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var Registrar = ViewBag.Registrar;
+    var Editar = ViewBag.Editar;
+    var Anular = ViewBag.Anular;
+    var Imprimir = ViewBag.Imprimir;
+    var Fecha = ViewBag.Fecha;
+    var Admin = ViewBag.Admin;
+}
+@section Styles {
+    <link rel="stylesheet" href="~/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/adminlte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <link href="~/adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css" rel="stylesheet" />
+   
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="mb-0 text-secondary font-weight-bold">Aprobación de Requerimientos</h4>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="card card-outline card-secondary shadow-sm">
+        <div class="card-header py-2">
+            <h6 class="mb-0 text-muted">Filtros de búsqueda</h6>
+        </div>
+        <div class="card-body py-2">
+            @* <form asp-controller="Requerimientos" asp-action="Registro" method="post" class="form-row align-items-end"> *@
+            <form id="formFiltros" class="form-row align-items-end">
+                <div class="form-group col-md-2 mb-1">
+                    <label for="Clientes" class="small font-weight-bold">Empresa</label>
+                    <select asp-items="ViewBag.LEmpresas" name="Empresa" class="form-control select2bs4">
+                    </select>
+                </div>                         
+                <div class="form-group col-md-2 mb-2">
+                    <label class="small font-weight-bold">Tipo de Orden</label>
+                    <select asp-for="TipoOrden" asp-items="ViewBag.TiposOrden" class="form-control form-control-sm">
+                    </select>
+                </div>
+                <div class="form-group col-md-2 mb-2">
+                    <label for="fecha" class="small font-weight-bold">Periodo</label>
+                    <input type="month" name="Periodo" class="form-control form-control-sm" value="@ViewBag.Periodo" required />
+                </div>
+
+                <div class="form-group col-md-2 text-right mb-2">
+                    <button type="submit" class="btn btn-primary btn-sm btn-block">
+                        <i class="fas fa-search"></i> Buscar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<section class="content mt-3">
+    <form id="formDetalle" method="post" asp-controller="Requerimientos" asp-action="DetalleRequerimientos">
+        <input type="hidden" name="idRQ" id="inputIdRQ" />
+    </form>
+    <div class="card shadow-sm">
+        <div class="card-body p-2">
+            <div class="table-responsive">
+                <table class="table table-sm table-bordered table-hover table-striped small" id="tablaRQ" style="width:100%">
+                    <thead class="table-primary text-center">
+                        <tr>
+                            <th>RQTipo</th>
+                            <th>Periodo</th>
+                            <th>Nro RQ</th>
+                            <th>FecEmi</th>
+                            <th>Titulo</th>
+                            <th>Usuario</th>
+                            <th>Estado</th>
+                            <th>Descri</th>
+                            <th>Fecha-Hora</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section Scripts
+{
+    <script src="~/adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script>        
+       
+
+
+        $(document).ready(function () {
+
+            const STORAGE_KEY = "filtrosRQ";
+            const PAGINATION_KEY = "tablaRQ_paginacion";
+
+            // ====== CARGAR FILTROS GUARDADOS ======
+            let filtrosGuardados = JSON.parse(sessionStorage.getItem(STORAGE_KEY));
+            if (filtrosGuardados) {
+                $('select[name="Empresa"]').val(filtrosGuardados.emp_codigo).trigger('change');
+                $('select[name="TipoOrden"]').val(filtrosGuardados.rq_tipo);
+                $('input[name="Periodo"]').val(filtrosGuardados.rq_anomes);
+            }
+            var tabla = $('#tablaRQ').DataTable({
+                ajax: {
+                    url: '@Url.Action("ListarRQAjax", "Requerimientos")',
+                    type: 'POST',
+                    data: function (d) {
+                        d.emp_codigo = $('select[name="Empresa"]').val();
+                        d.rq_tipo = $('select[name="TipoOrden"]').val();
+                        d.rq_anomes = $('input[name="Periodo"]').val().replace(/-/g, '');
+                    }
+                },
+                pageLength: 10, // valor inicial
+                autoWidth: false,
+                stateSave: false,
+                columnDefs: [
+                    { width: "5%", targets: 0 },   // RQTipo
+                    { width: "5%", targets: 1 },   // Periodo
+                    { width: "7%", targets: 2 },   // Nro RQ
+                    { width: "9%", targets: 3 },   // FecEmi
+                    { width: "25%", targets: 4 },  // Título
+                    { width: "8%", targets: 5 },  // Usuario
+                    { width: "8%", targets: 6 },   // Estado
+                    { width: "10%", targets: 7 },  // Descripción
+                    { width: "10%", targets: 8 }   // Fecha-Hora
+                ],
+                columns: [
+                    { data: "tipoOrden" },
+                    { data: "periodo" },
+                    { data: "numero" },
+                    {
+                        data: "fechaRegistro",
+                        render: function (data) {
+                            return data ? data.split('T')[0] : '';
+                        }
+                    },
+                    { data: "tituloRq" },
+                    { data: "usuSoli" },
+                    { data: "estado" },
+                    { data: "tipoRq" },
+                    { data: "fechaCrea" },
+                ],
+                createdRow: function (row, data) {
+                    $(row).addClass('clickable-row').attr('data-idrq', data.idRQC);
+                },
+                order: [[1, 'asc']],
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
+                },
+                initComplete: function () {
+                    // Restaurar paginación si existe
+                    let paginacion = JSON.parse(sessionStorage.getItem(PAGINATION_KEY));
+                    if (paginacion) {
+                        tabla.page.len(paginacion.pageLength).draw(false);
+                        tabla.page(paginacion.pageIndex).draw(false);
+                    }
+                }
+            });
+            tabla.on('page.dt length.dt', function () {
+                const info = tabla.page.info();
+                sessionStorage.setItem(PAGINATION_KEY, JSON.stringify({
+                    pageIndex: info.page,
+                    pageLength: info.length
+                }));
+            });
+
+            tabla.on('preXhr.dt', function () {
+                Swal.fire({
+                    title: 'Cargando requerimientos...',
+                    text: 'Por favor espere un momento',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+            });
+
+            // 🔹 Cerrar SweetAlert cuando termina la carga
+            tabla.on('xhr.dt', function () {
+                Swal.close();
+            });
+
+            function cargarDetalle(id_rq, fila) {
+                // Si ya está abierta, la cerramos
+                if (tabla.row(fila).child.isShown()) {
+                    tabla.row(fila).child.hide();
+                    fila.removeClass('shown');
+                    return;
+                }
+
+                Swal.fire({
+                    title: 'Cargando detalle...',
+                    text: 'Por favor espere un momento',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+                $.ajax({
+                    url: '@Url.Action("ListarDetalleRQ", "Requerimientos")',
+                    type: 'POST',
+                    data: { id_rqC: id_rq },
+                    success: function (response) {
+                        let detalle = `
+                            <table class="table table-sm table-bordered mb-0">
+                                <thead class="table-success">
+                                    <tr>
+                                        <th>Producto</th>
+                                        <th>Cantidad</th>
+                                        <th>Obs</th>
+                                        <th>Fecha Entrega</th>
+                                        <th>Centro Costo</th>
+                                        <th>Estado</th>
+                                        <th>Aprobador</th>
+                                        <th>Fecha Aprob.</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>`;
+
+                        $.each(response.data, function (i, item) {
+                            detalle += `
+                                <tr>
+                                    <td>${item.pro_Abrevi}</td>
+                                    <td>${item.rq_cantid}</td>
+                                    <td>${item.pro_Observ??''}</td>
+                                    <td>${item.fechaEntrega}</td>
+                                    <td>${item.ana_Descri}</td>
+                                    <td>${item.estadoAprobado}</td>
+                                    <td>${item.apro_usudes ?? ''}</td>
+                                    <td>${item.fechaAprobacion ?? ''}</td>
+                                    <td>${item.acciones ?? ''}</td>
+                                </tr>`;
+                        });
+
+                        detalle += `</tbody></table>`;
+
+                        tabla.row(fila).child(detalle).show();
+                        fila.addClass('shown');
+                        Swal.close();
+                    },
+                    error: function () {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Ocurrió un problema al cargar el detalle.'
+                        });
+                    }
+                });
+            }
+
+            // Evento click en fila
+            $('#tablaRQ tbody').on('click', 'tr.clickable-row', function () {
+                var id_rq = $(this).data('idrq');
+                cargarDetalle(id_rq, $(this));
+            });
+
+            $('#formFiltros').on('submit', function (e) {
+                e.preventDefault();
+
+                // Guardar filtros actuales
+                let filtros = {
+                    emp_codigo: $('select[name="Empresa"]').val(),
+                    rq_tipo: $('select[name="TipoOrden"]').val(),
+                    rq_anomes: $('input[name="Periodo"]').val()
+                };
+                sessionStorage.setItem(STORAGE_KEY, JSON.stringify(filtros));
+                // Recargar tabla
+                tabla.ajax.reload();
+            });
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4',
+                placeholder: 'Todos los clientes',
+                allowClear: true
+            });
+
+        });
+
+
+    </script>
+}           

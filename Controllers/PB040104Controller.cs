@@ -206,7 +206,6 @@ namespace Bazsoft_ERP.Controllers
             return View();
         }
 
-
         [HttpPost]
         public IActionResult ListarRQAjax(string emp_codigo, string rq_tipo, string rq_anomes)
         {
@@ -238,8 +237,7 @@ namespace Bazsoft_ERP.Controllers
                                 <i class='fas fa-edit'></i>
                             </button>                                          
                         </div>";
-                    }
-                                  
+                    }                    
 
                     return new
                     {
@@ -252,13 +250,13 @@ namespace Bazsoft_ERP.Controllers
                         x.Estado,
                         x.UsuSoli,
                         x.TipoRq,
-                        x.FechaCrea,
+                        FechaCrea = x.FechaCrea.ToString("dd-MM-yyyy HH:mm:ss"),
                         Acciones = accionesHtml
                     };
                 }).ToList();
 
                 return Json(new { data = listaDTO });
-            }
+            }   
         }
         [HttpPost]
         public IActionResult ListarDetalleRQ(string id_rqC)
@@ -283,7 +281,8 @@ namespace Bazsoft_ERP.Controllers
                     string accionesHtml = "";
 
                     // Si el usuario actual es el mismo que el aprobador del item, muestra botones
-                    if (x.apro_usu != null && x.apro_usu.ToString().Equals(logUser, StringComparison.OrdinalIgnoreCase)&& x.FechaAprobacion == null)
+                    if (x.apro_usudes != null && x.apro_usudes.ToString().Equals(logUser, StringComparison.OrdinalIgnoreCase) && string.IsNullOrWhiteSpace(Convert.ToString(x.FechaAprobacion)))
+                    
                     {
                         accionesHtml = $@"
                         <div class='d-flex justify-content-center gap-1'>
@@ -331,7 +330,6 @@ namespace Bazsoft_ERP.Controllers
 
             string genTipoRQ = HttpContext.Session.GetString("GenTipoRQ");
 
-            //ViewBag.Clientes = ObtenerClientes(userId);
             ViewBag.UsuAprueba = ObtenerUsuAprobaRQ().ToList();
             //ViewBag.TiposOrden = ObtenerTipoOrden().ToList();            
             var tiposOrden = ObtenerTipoOrden().ToList();
@@ -455,7 +453,40 @@ namespace Bazsoft_ERP.Controllers
                 }
             }
         }
-        
+
+
+        [HttpGet]
+        public IActionResult ObtenerCabeceraRQ(string idRQC)
+        {
+            int id_rq = int.Parse(CryptoHelper.DescifrarId(idRQC));
+
+            using (var db = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+            {
+                var cabecera = db.QueryFirstOrDefault<dynamic>(
+                    "spWebLog_ObtenerCabeceraRQ",
+                    new { id_rq },
+                    commandType: CommandType.StoredProcedure
+                );
+
+                return Json(cabecera);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult ListarDetalleRQ(int id_rq)
+        {
+            using (var db = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+            {
+                var lista = db.Query<dynamic>(
+                    "spWebLog_Listar_DetRQ",
+                    new { id_rq },
+                    commandType: CommandType.StoredProcedure
+                ).ToList();
+
+                return Json(new { data = lista });
+            }
+        }
+
         #endregion
 
     }

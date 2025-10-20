@@ -7,7 +7,7 @@
         public string? Periodo { get; set; }
         public string ? Empresa { get; set; } 
         public DateTime FechaRegistro { get; set; }
-        public string ? FechaCrea { get; set; }
+        public DateTime FechaCrea { get; set; }
         public string ? TipoOrden { get; set; }
         public string? Numero { get; set; }
         public string? TipoOrdenC { get; set; }

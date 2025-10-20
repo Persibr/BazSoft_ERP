@@ -3,16 +3,28 @@
   "WorkspaceRootPath": "D:\\Instaladores\\GitHub\\BazSoft_ERP\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4BAC69DC-E58A-44B6-BFB7-23B5702B41E7}|Bazsoft_ERP.csproj|d:\\instaladores\\github\\bazsoft_erp\\controllers\\pb040104controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BAC69DC-E58A-44B6-BFB7-23B5702B41E7}|Bazsoft_ERP.csproj|solutionrelative:controllers\\pb040104controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{4BAC69DC-E58A-44B6-BFB7-23B5702B41E7}|Bazsoft_ERP.csproj|d:\\instaladores\\github\\bazsoft_erp\\views\\pb040104\\_modregistro.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{4BAC69DC-E58A-44B6-BFB7-23B5702B41E7}|Bazsoft_ERP.csproj|solutionrelative:views\\pb040104\\_modregistro.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4BAC69DC-E58A-44B6-BFB7-23B5702B41E7}|Bazsoft_ERP.csproj|d:\\instaladores\\github\\bazsoft_erp\\views\\pb040104\\registro.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{4BAC69DC-E58A-44B6-BFB7-23B5702B41E7}|Bazsoft_ERP.csproj|solutionrelative:views\\pb040104\\registro.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4BAC69DC-E58A-44B6-BFB7-23B5702B41E7}|Bazsoft_ERP.csproj|d:\\instaladores\\github\\bazsoft_erp\\controllers\\pb040104controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BAC69DC-E58A-44B6-BFB7-23B5702B41E7}|Bazsoft_ERP.csproj|solutionrelative:controllers\\pb040104controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4BAC69DC-E58A-44B6-BFB7-23B5702B41E7}|Bazsoft_ERP.csproj|d:\\instaladores\\github\\bazsoft_erp\\views\\pb040106\\aprobar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4BAC69DC-E58A-44B6-BFB7-23B5702B41E7}|Bazsoft_ERP.csproj|solutionrelative:views\\pb040106\\aprobar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4BAC69DC-E58A-44B6-BFB7-23B5702B41E7}|Bazsoft_ERP.csproj|d:\\instaladores\\github\\bazsoft_erp\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4BAC69DC-E58A-44B6-BFB7-23B5702B41E7}|Bazsoft_ERP.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4BAC69DC-E58A-44B6-BFB7-23B5702B41E7}|Bazsoft_ERP.csproj|d:\\instaladores\\github\\bazsoft_erp\\controllers\\pb040106controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BAC69DC-E58A-44B6-BFB7-23B5702B41E7}|Bazsoft_ERP.csproj|solutionrelative:controllers\\pb040106controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -30,39 +42,78 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "D:\\Instaladores\\GitHub\\BazSoft_ERP\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "D:\\Instaladores\\GitHub\\BazSoft_ERP\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAABsAAAAAAAAAAAAAAC8AAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-20T16:52:51.603Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Aprobar.cshtml",
+              "DocumentMoniker": "D:\\Instaladores\\GitHub\\BazSoft_ERP\\Views\\PB040106\\Aprobar.cshtml",
+              "RelativeDocumentMoniker": "Views\\PB040106\\Aprobar.cshtml",
+              "ToolTip": "D:\\Instaladores\\GitHub\\BazSoft_ERP\\Views\\PB040106\\Aprobar.cshtml",
+              "RelativeToolTip": "Views\\PB040106\\Aprobar.cshtml",
+              "ViewState": "AgIAALYAAAAAAAAAAAAowPQAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-20T16:15:31.774Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "PB040106Controller.cs",
+              "DocumentMoniker": "D:\\Instaladores\\GitHub\\BazSoft_ERP\\Controllers\\PB040106Controller.cs",
+              "RelativeDocumentMoniker": "Controllers\\PB040106Controller.cs",
+              "ToolTip": "D:\\Instaladores\\GitHub\\BazSoft_ERP\\Controllers\\PB040106Controller.cs",
+              "RelativeToolTip": "Controllers\\PB040106Controller.cs",
+              "ViewState": "AgIAAPgAAAAAAAAAAAAwwAsBAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-20T14:40:13.068Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "_ModRegistro.cshtml",
               "DocumentMoniker": "D:\\Instaladores\\GitHub\\BazSoft_ERP\\Views\\PB040104\\_ModRegistro.cshtml",
               "RelativeDocumentMoniker": "Views\\PB040104\\_ModRegistro.cshtml",
               "ToolTip": "D:\\Instaladores\\GitHub\\BazSoft_ERP\\Views\\PB040104\\_ModRegistro.cshtml",
               "RelativeToolTip": "Views\\PB040104\\_ModRegistro.cshtml",
-              "ViewState": "AgIAAAkCAAAAAAAAAAAcwCICAABTAAAAAAAAAA==",
+              "ViewState": "AgIAAHcAAAAAAAAAAAAtwI8AAACCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-10-17T19:38:14.431Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "Registro.cshtml",
               "DocumentMoniker": "D:\\Instaladores\\GitHub\\BazSoft_ERP\\Views\\PB040104\\Registro.cshtml",
               "RelativeDocumentMoniker": "Views\\PB040104\\Registro.cshtml",
               "ToolTip": "D:\\Instaladores\\GitHub\\BazSoft_ERP\\Views\\PB040104\\Registro.cshtml",
               "RelativeToolTip": "Views\\PB040104\\Registro.cshtml",
-              "ViewState": "AgIAAAYBAAAAAAAAAAAAwBIBAAASAAAAAAAAAA==",
+              "ViewState": "AgIAALUAAAAAAAAAAAAAAMsAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-10-13T18:20:14.912Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "PB040104Controller.cs",
               "DocumentMoniker": "D:\\Instaladores\\GitHub\\BazSoft_ERP\\Controllers\\PB040104Controller.cs",
               "RelativeDocumentMoniker": "Controllers\\PB040104Controller.cs",
               "ToolTip": "D:\\Instaladores\\GitHub\\BazSoft_ERP\\Controllers\\PB040104Controller.cs",
               "RelativeToolTip": "Controllers\\PB040104Controller.cs",
-              "ViewState": "AgIAAC8BAAAAAAAAAAAAwDUBAAAqAAAAAAAAAA==",
+              "ViewState": "AgIAAD0BAAAAAAAAAAAYwGQBAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-13T16:19:19.568Z",
               "EditorCaption": ""

@@ -20,24 +20,36 @@ build_property._RazorSourceGeneratorDebug =
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
-[D:/Instaladores/GitHub/BazSoft_ERP/Views/Menu/Crear.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxDcmVhci5jc2h0bWw=
+[D:/Instaladores/GitHub/BazSoft_ERP/Views/PB040104/Registro.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUEIwNDAxMDRcUmVnaXN0cm8uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Instaladores/GitHub/BazSoft_ERP/Views/Menu/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxJbmRleC5jc2h0bWw=
+[D:/Instaladores/GitHub/BazSoft_ERP/Views/PB040104/_ModRegistro.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUEIwNDAxMDRcX01vZFJlZ2lzdHJvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Instaladores/GitHub/BazSoft_ERP/Views/PB600001-Dashboard/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUEI2MDAwMDEtRGFzaGJvYXJkXEluZGV4LmNzaHRtbA==
+[D:/Instaladores/GitHub/BazSoft_ERP/Views/PB040106/Aprobar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUEIwNDAxMDZcQXByb2Jhci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Instaladores/GitHub/BazSoft_ERP/Views/Procesos/Recojo.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvY2Vzb3NcUmVjb2pvLmNzaHRtbA==
+[D:/Instaladores/GitHub/BazSoft_ERP/Views/PB600001/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUEI2MDAwMDFcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Instaladores/GitHub/BazSoft_ERP/Views/Procesos/_ModRecojo.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvY2Vzb3NcX01vZFJlY29qby5jc2h0bWw=
+[D:/Instaladores/GitHub/BazSoft_ERP/Views/PB600601/Inicio.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUEI2MDA2MDFcSW5pY2lvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Instaladores/GitHub/BazSoft_ERP/Views/PB600601/_ModRecojo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUEI2MDA2MDFcX01vZFJlY29qby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Instaladores/GitHub/BazSoft_ERP/Views/PB600602/Recojo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUEI2MDA2MDJcUmVjb2pvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Instaladores/GitHub/BazSoft_ERP/Views/PB600602/_ModRecojo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUEI2MDA2MDJcX01vZFJlY29qby5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Instaladores/GitHub/BazSoft_ERP/Views/Shared/_MenuPartial.cshtml]
