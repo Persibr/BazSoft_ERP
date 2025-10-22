@@ -202,356 +202,356 @@
             </div>
         </div>
     </div>
-    <script>
-        $(document).ready(function() {
-            let detalles = [];
-            function cargarProductosPorTipo(tipo) {
-                const $producto = $('#Producto');
-                $producto.empty().append('<option value="">[Seleccione Producto]</option>');
-
-                if (tipo && tipo.toUpperCase() === 'ODS') {
-                    $('#ProductoServicios option').clone().appendTo($producto);
-                } else {
-                    $('#ProductoTodos option').clone().appendTo($producto);
-                }
-
-                const primerProducto = $producto.find('option:eq(1)');
-                if (primerProducto.length) {
-                    primerProducto.prop('selected', true);
-                    $('#UND').val(primerProducto.data('uni_codigo') || '');
-                    $('#IdUND').val(primerProducto.data('uni_id') || '');
-                    $('#TEntrega').val(primerProducto.data('dia_rep') ? primerProducto.data('dia_rep') + " dias" : '0 dias');
-                }
-                $producto.trigger('change');
-
-                $producto.trigger('change.select2');
-            }
-
-            const tipoInicial = $('#TipoOrdenC').val();
-            cargarProductosPorTipo(tipoInicial);
-
-            $('#TipoOrdenC').on('change', function() {
-                cargarProductosPorTipo($(this).val());
-            });
-
-            $('#Producto').on('change', function() {
-                const $opt = $(this).find('option:selected');
-                const idProducto = $(this).val();
-
-                $('#UND').val($opt.data('uni_codigo') || '');
-                $('#IdUND').val($opt.data('uni_id') || '');
-                $('#TEntrega').val($opt.data('dia_rep') ? $opt.data('dia_rep') + " dias" : '0 dias');
-
-                const $presentacion = $('select[name="Presentacion"]');
-
-                if (idProducto) {
-                    $.ajax({
-                        url: '@Url.Action("GetPresentacionesPorProducto", "Requerimientos")',
-                        type: 'GET',
-                        data: { id_producto: idProducto },
-                        success: function (data) {
-                            $presentacion.empty();
-                            $.each(data, function (_, p) {
-                                $presentacion.append(`<option value="${p.value}">${p.text}</option>`);
-                            });
-                            if (data.length === 1) {
-                                $presentacion.val(data[0].value);
-                            }
-                            $presentacion.trigger('change.select2');
-                        },
-                        error: function () {
-                            console.error('Error al cargar presentaciones.');
-                            $presentacion.html('<option value="">[Error al cargar]</option>').trigger('change.select2');
-                        }
-                    });
-                } else {
-                    $presentacion.html('<option value="">[Seleccione Presentación]</option>').trigger('change.select2');
-                }
-                const diaRep  = parseInt($opt.data('dia_rep')) || 0;
-                const fechaRegistro = $('input[name="FechaRegistro"]').val();
-                if (fechaRegistro) {
-                    const fecha = new Date(fechaRegistro);
-                    const diasSumar = (diaRep > 0 ? diaRep : 1);
-                    fecha.setDate(fecha.getDate() + diasSumar);
-
-                    const fechaEntregaMin = fecha.toISOString().split('T')[0];
-                    const $fechaEntrega = $('input[name="FechaEntrega"]');
-
-                    $fechaEntrega.val(fechaEntregaMin);
-                    $fechaEntrega.attr('min', fechaEntregaMin);
-                }
-
-            });
-            $('#modalRQ').on('shown.bs.modal', function() {
-                $('.select2bs42').select2({
-                    theme: 'bootstrap4',
-                    placeholder: 'Seleccione',
-                    allowClear: true,
-                    width: '100%',
-                    dropdownParent: $('#modalRQ')
-                });
-            });
-            $('input[name="FechaRegistro"]').on('change', function () {
-                $('#Producto').trigger('change');
-            });
-            $('#btnAgregarDetalle').on('click', function () {
-                const errores = [];
-
-                const producto = $('#Producto option:selected').text();
-                const idProducto = $('#Producto').val();
-                const und = $('#UND').val();
-                const idfactor = $('select[name="Presentacion"]').val();
-                const presentacion = $('select[name="Presentacion"] option:selected').text();
-                const cantidad = $('#Cant').val();
-                const fechaEntrega = $('input[name="FechaEntrega"]').val();
-                const idAnalit = $('select[name="Destino"]').val();
-                const destino = $('select[name="Destino"] option:selected').text();
-                const observacion = $('#Observacion').val();
-
-                if (!idProducto) errores.push("Producto");
-                if (!idfactor) errores.push("Presentación");
-                if (!cantidad || cantidad <= 0) errores.push("Cantidad válida");
-                if (!fechaEntrega) errores.push("Fecha de Entrega");
-                if (!idAnalit) errores.push("Destino");
-
-                if (errores.length > 0) {
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'Campos requeridos faltantes',
-                        html: `<ul style="text-align:left; margin:0; padding-left:20px;">${errores.map(c => `<li>${c}</li>`).join('')}</ul>`,
-                        confirmButtonText: 'Aceptar'
-                    });
-                    return;
-                }
-
-                const editIndex = $('#Producto').data('edit-index');
-                const editId = $('#Producto').data('edit-id') || 0;
-
-                let item = $('#tablaDetalles tbody tr').length + 1;
-                let id_rqdet = 0;
-
-                if (editIndex !== undefined) {
-                    item = editIndex + 1; // mantener el mismo número de ítem
-                    id_rqdet = editId;
-                }
-
-                const nuevaFila = `
-                    <tr data-id_rqdet="${id_rqdet}">
-                        <td>${item}</td>
-                        <td class="d-none">${idProducto}</td>
-                        <td>${producto}</td>
-                        <td class="d-none">${idfactor}</td>
-                        <td>${presentacion}</td>
-                        <td>${und}</td>
-                        <td>${cantidad}</td>
-                        <td>${fechaEntrega}</td>
-                        <td class="d-none">${idAnalit}</td>
-                        <td>${destino}</td>
-                        <td class="d-none">${observacion}</td>
-                        <td>0</td>
-                        <td>
-                            <button type="button" class="btn btn-sm btn-warning btn-editar"><i class="fas fa-edit"></i></button>
-                            <button type="button" class="btn btn-sm btn-danger btn-borrar"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
-                `;
-
-                if (editIndex !== undefined) {
-                    const filas = $('#tablaDetalles tbody tr');
-                    if (editIndex >= filas.length) {
-                        $('#tablaDetalles tbody').append(nuevaFila);
-                    } else {
-                        $(filas[editIndex]).before(nuevaFila);
-                    }
-
-                    $('#Producto').removeData('edit-index');
-                    $('#Producto').removeData('edit-id');
-                } else {
-                    $('#tablaDetalles tbody').append(nuevaFila);
-                }
-                detalles.push({
-                    IdRqDet: id_rqdet,
-                    ProductoId: idProducto,
-                    ProductoTexto: producto,
-                    IdFactor: idfactor,
-                    Presentacion: presentacion,
-                    Unidad: und,
-                    Cantidad: cantidad,
-                    FechaEntrega: fechaEntrega,
-                    IdAnalit: idAnalit,
-                    DestinoTexto: destino,
-                    Observacion: observacion
-                });
-                $('#Cant, #Observacion').val('');
-            });
-            function cargarDestinos(empCodigo) {
-                if (!empCodigo) {
-                    $('select[name="Destino"]').html('<option value="">[Seleccione Destino]</option>').trigger('change');
-                    return;
-                }
-
-                $.ajax({
-                    url: '@Url.Action("GetDestinosPorEmpresa", "Requerimientos")',
-                    type: 'GET',
-                    data: { emp_codigo: empCodigo },
-                    success: function (data) {
-                        const $destino = $('select[name="Destino"]');
-                        $destino.empty().append('<option value="">[Seleccione Destino]</option>');
-
-                        $.each(data, function (_, d) {
-                            $destino.append(`<option value="${d.id_analit}">${d.Ana_Abrevi} - ${d.Ana_Codigo}</option>`);
-                        });
-
-                        $destino.trigger('change.select2');
-                    },
-                    error: function () {
-                        console.error('Error al cargar destinos.');
-                    }
-                });
-            }
-
-            $('select[name="Empresa"]').on('change', function () {
-                const empCodigo = $(this).val();
-                cargarDestinos(empCodigo);
-            });
-
-            $('#modalRQ').on('shown.bs.modal', function () {
-                const $empresa = $('select[name="Empresa"]');
-                let empCodigo = $empresa.val();
-
-                if (!empCodigo) {
-                    empCodigo = $empresa.find('option:eq(0)').val();
-                    $empresa.val(empCodigo).trigger('change.select2');
-                }
-
-                cargarDestinos(empCodigo);
-            });
-
-            $('#tablaDetalles').on('click', '.btn-borrar, .btn-editar', function () {
-                const $fila = $(this).closest('tr');
-
-                if ($(this).hasClass('btn-borrar')) {
-
-                    $fila.remove();
-                    $('#tablaDetalles tbody tr').each(function (i) {
-                        $(this).find('td:first').text(i + 1);
-                    });
-                    return;
-                }
-
-                if ($(this).hasClass('btn-editar')) {
-                    const index = $fila.index();
-                    const id_rqdet = $fila.data('id_rqdet') || 0;
-                    const idProducto = $fila.find('td:eq(1)').text().trim();
-                    const producto = $fila.find('td:eq(2)').text().trim();
-                    const idfactor = $fila.find('td:eq(3)').text().trim();
-                    const presentacion = $fila.find('td:eq(4)').text().trim();
-                    const und = $fila.find('td:eq(5)').text().trim();
-                    const cantidad = $fila.find('td:eq(6)').text().trim();
-                    const fechaEntrega = $fila.find('td:eq(7)').text().trim();
-                    const idAnalit = $fila.find('td:eq(8)').text().trim();
-                    const destino = $fila.find('td:eq(9)').text().trim();
-                    const observacion = $fila.find('td:eq(10)').text().trim();
-
-                    $('#Producto').val(idProducto).trigger('change');
-                    $('#UND').val(und);
-                    $('#IdUND').val(idfactor);
-                    $('select[name="Presentacion"]').val(idfactor).trigger('change');
-                    $('#Cant').val(cantidad);
-                    $('input[name="FechaEntrega"]').val(fechaEntrega);
-                    $('select[name="Destino"]').val(idAnalit).trigger('change');
-                    $('#Observacion').val(observacion);
-
-                    $('#Producto').data('edit-id', id_rqdet);
-                    $('#Producto').data('edit-index', index);
-
-                    $fila.remove();
-                }
-            });
-
-            const form = document.getElementById('formRecojoRQ');
-
-            document.getElementById("formRecojoRQ").addEventListener("submit", function (e) {
-                e.preventDefault();
-                const errores = [];
-
-                let totalFilas = $("#tablaDetalles tbody tr").length;
-
-                const fechaRegistro = document.querySelector('input[name="FechaRegistro"]').value;
-                const tipoOrden = document.querySelector('select[name="TipoOrdenC"]').value;
-                const empresa = document.querySelector('select[name="Empresa"]').value;
-                const usuAprueba = document.querySelector('select[name="UsuAprueba"]').value;
-                const tipoRq = document.querySelector('select[name="TipoRq"]').value;
-                const tituloRq = document.querySelector('input[name="TituloRq"]').value.trim();
-
-                if (!empresa) errores.push("Empresa");
-                if (!fechaRegistro) errores.push("Fecha de Registro");
-                if (!tipoOrden) errores.push("Tipo de Orden");
-                if (!usuAprueba) errores.push("Usuario que aprueba");
-                if (!tipoRq) errores.push("Tipo de Requerimiento");
-                if (!tituloRq) errores.push("Título de Requerimiento");
-
-                if (errores.length > 0) {
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'Campos requeridos faltantes',
-                        html: `<ul style="text-align:left;">${errores.map(c => `<li>${c}</li>`).join('')}</ul>`,
-                        confirmButtonText: 'Aceptar'
-                    });
-                    return;
-                }
-
-                if (detalles.length === 0 || totalFilas === 0) {
-                    Swal.fire("Advertencia", "Debe agregar al menos un detalle al requerimiento.", "warning");
-                    return;
-                }
-
-                for (let i = 0; i < detalles.length; i++) {
-                    const d = detalles[i];
-                    if (!d.ProductoId || !d.IdFactor || !d.Cantidad || !d.FechaEntrega || !d.IdAnalit) {
-                        Swal.fire("Advertencia", `Faltan datos en el detalle N° ${i + 1}.`, "warning");
-                        return;
-                    }
-                }
-
-                document.getElementById("detallesJson").value = JSON.stringify(detalles);
-
-                //form.submit();
-                const form = e.target;
-                const formData = new FormData(form);
-
-                $.ajax({
-                    url: form.action,
-                    type: form.method,
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function (response) {
-                        Swal.fire({
-                            icon: "success",
-                            title: "Requerimiento guardado correctamente",
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-
-                        // ✅ Cierra el modal
-                        $("#modalRQ").modal("hide");
-
-                        // Limpia los detalles del form
-                        detalles = [];
-                    },
-                    error: function (xhr) {
-                        Swal.fire({
-                            icon: "error",
-                            title: "Error al guardar",
-                            text: xhr.responseText || "Ocurrió un error inesperado"
-                        });
-                    }
-                });
-            });
-
-        });
-
-    </script>
 </div>
 
+<script>
+    $(document).ready(function() {
+        let detalles = [];
+        function cargarProductosPorTipo(tipo) {
+            const $producto = $('#Producto');
+            $producto.empty().append('<option value="">[Seleccione Producto]</option>');
+
+            if (tipo && tipo.toUpperCase() === 'ODS') {
+                $('#ProductoServicios option').clone().appendTo($producto);
+            } else {
+                $('#ProductoTodos option').clone().appendTo($producto);
+            }
+
+            const primerProducto = $producto.find('option:eq(1)');
+            if (primerProducto.length) {
+                primerProducto.prop('selected', true);
+                $('#UND').val(primerProducto.data('uni_codigo') || '');
+                $('#IdUND').val(primerProducto.data('uni_id') || '');
+                $('#TEntrega').val(primerProducto.data('dia_rep') ? primerProducto.data('dia_rep') + " dias" : '0 dias');
+            }
+            $producto.trigger('change');
+
+            $producto.trigger('change.select2');
+        }
+
+        const tipoInicial = $('#TipoOrdenC').val();
+        cargarProductosPorTipo(tipoInicial);
+
+        $('#TipoOrdenC').on('change', function() {
+            cargarProductosPorTipo($(this).val());
+        });
+
+        $('#Producto').on('change', function() {
+            const $opt = $(this).find('option:selected');
+            const idProducto = $(this).val();
+
+            $('#UND').val($opt.data('uni_codigo') || '');
+            $('#IdUND').val($opt.data('uni_id') || '');
+            $('#TEntrega').val($opt.data('dia_rep') ? $opt.data('dia_rep') + " dias" : '0 dias');
+
+            const $presentacion = $('select[name="Presentacion"]');
+
+            if (idProducto) {
+                $.ajax({
+                    url: '@Url.Action("GetPresentacionesPorProducto", "Requerimientos")',
+                    type: 'GET',
+                    data: { id_producto: idProducto },
+                    success: function (data) {
+                        $presentacion.empty();
+                        $.each(data, function (_, p) {
+                            $presentacion.append(`<option value="${p.value}">${p.text}</option>`);
+                        });
+                        if (data.length === 1) {
+                            $presentacion.val(data[0].value);
+                        }
+                        $presentacion.trigger('change.select2');
+                    },
+                    error: function () {
+                        console.error('Error al cargar presentaciones.');
+                        $presentacion.html('<option value="">[Error al cargar]</option>').trigger('change.select2');
+                    }
+                });
+            } else {
+                $presentacion.html('<option value="">[Seleccione Presentación]</option>').trigger('change.select2');
+            }
+            const diaRep  = parseInt($opt.data('dia_rep')) || 0;
+            const fechaRegistro = $('input[name="FechaRegistro"]').val();
+            if (fechaRegistro) {
+                const fecha = new Date(fechaRegistro);
+                const diasSumar = (diaRep > 0 ? diaRep : 1);
+                fecha.setDate(fecha.getDate() + diasSumar);
+
+                const fechaEntregaMin = fecha.toISOString().split('T')[0];
+                const $fechaEntrega = $('input[name="FechaEntrega"]');
+
+                $fechaEntrega.val(fechaEntregaMin);
+                $fechaEntrega.attr('min', fechaEntregaMin);
+            }
+
+        });
+        $('#modalRQ').on('shown.bs.modal', function () {
+            $(this).find('.select2bs42').select2({
+                theme: 'bootstrap4',
+                placeholder: 'Seleccione',
+                allowClear: true,
+                width: '100%',
+                dropdownParent: $('#modalRQ') // 🔹 evita que el menú se salga del modal
+            });
+        });
+        $('input[name="FechaRegistro"]').on('change', function () {
+            $('#Producto').trigger('change');
+        });
+        $('#btnAgregarDetalle').on('click', function () {
+            const errores = [];
+
+            const producto = $('#Producto option:selected').text();
+            const idProducto = $('#Producto').val();
+            const und = $('#UND').val();
+            const idfactor = $('select[name="Presentacion"]').val();
+            const presentacion = $('select[name="Presentacion"] option:selected').text();
+            const cantidad = $('#Cant').val();
+            const fechaEntrega = $('input[name="FechaEntrega"]').val();
+            const idAnalit = $('select[name="Destino"]').val();
+            const destino = $('select[name="Destino"] option:selected').text();
+            const observacion = $('#Observacion').val();
+
+            if (!idProducto) errores.push("Producto");
+            if (!idfactor) errores.push("Presentación");
+            if (!cantidad || cantidad <= 0) errores.push("Cantidad válida");
+            if (!fechaEntrega) errores.push("Fecha de Entrega");
+            if (!idAnalit) errores.push("Destino");
+
+            if (errores.length > 0) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Campos requeridos faltantes',
+                    html: `<ul style="text-align:left; margin:0; padding-left:20px;">${errores.map(c => `<li>${c}</li>`).join('')}</ul>`,
+                    confirmButtonText: 'Aceptar'
+                });
+                return;
+            }
+
+            const editIndex = $('#Producto').data('edit-index');
+            const editId = $('#Producto').data('edit-id') || 0;
+
+            let item = $('#tablaDetalles tbody tr').length + 1;
+            let id_rqdet = 0;
+
+            if (editIndex !== undefined) {
+                item = editIndex + 1; // mantener el mismo número de ítem
+                id_rqdet = editId;
+            }
+
+            const nuevaFila = `
+                <tr data-id_rqdet="${id_rqdet}">
+                    <td>${item}</td>
+                    <td class="d-none">${idProducto}</td>
+                    <td>${producto}</td>
+                    <td class="d-none">${idfactor}</td>
+                    <td>${presentacion}</td>
+                    <td>${und}</td>
+                    <td>${cantidad}</td>
+                    <td>${fechaEntrega}</td>
+                    <td class="d-none">${idAnalit}</td>
+                    <td>${destino}</td>
+                    <td class="d-none">${observacion}</td>
+                    <td>0</td>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-warning btn-editar"><i class="fas fa-edit"></i></button>
+                        <button type="button" class="btn btn-sm btn-danger btn-borrar"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+            `;
+
+            if (editIndex !== undefined) {
+                const filas = $('#tablaDetalles tbody tr');
+                if (editIndex >= filas.length) {
+                    $('#tablaDetalles tbody').append(nuevaFila);
+                } else {
+                    $(filas[editIndex]).before(nuevaFila);
+                }
+
+                $('#Producto').removeData('edit-index');
+                $('#Producto').removeData('edit-id');
+            } else {
+                $('#tablaDetalles tbody').append(nuevaFila);
+            }
+            detalles.push({
+                IdRqDet: id_rqdet,
+                ProductoId: idProducto,
+                ProductoTexto: producto,
+                IdFactor: idfactor,
+                Presentacion: presentacion,
+                Unidad: und,
+                Cantidad: cantidad,
+                FechaEntrega: fechaEntrega,
+                IdAnalit: idAnalit,
+                DestinoTexto: destino,
+                Observacion: observacion
+            });
+            $('#Cant, #Observacion').val('');
+        });
+        function cargarDestinos(empCodigo) {
+            if (!empCodigo) {
+                $('select[name="Destino"]').html('<option value="">[Seleccione Destino]</option>').trigger('change');
+                return;
+            }
+
+            $.ajax({
+                url: '@Url.Action("GetDestinosPorEmpresa", "Requerimientos")',
+                type: 'GET',
+                data: { emp_codigo: empCodigo },
+                success: function (data) {
+                    const $destino = $('select[name="Destino"]');
+                    $destino.empty().append('<option value="">[Seleccione Destino]</option>');
+
+                    $.each(data, function (_, d) {
+                        $destino.append(`<option value="${d.id_analit}">${d.Ana_Abrevi} - ${d.Ana_Codigo}</option>`);
+                    });
+
+                    $destino.trigger('change.select2');
+                },
+                error: function () {
+                    console.error('Error al cargar destinos.');
+                }
+            });
+        }
+
+        $('select[name="Empresa"]').on('change', function () {
+            const empCodigo = $(this).val();
+            cargarDestinos(empCodigo);
+        });
+
+        $('#modalRQ').on('shown.bs.modal', function () {
+            const $empresa = $('select[name="Empresa"]');
+            let empCodigo = $empresa.val();
+
+            if (!empCodigo) {
+                empCodigo = $empresa.find('option:eq(0)').val();
+                $empresa.val(empCodigo).trigger('change.select2');
+            }
+
+            cargarDestinos(empCodigo);
+        });
+
+        $('#tablaDetalles').on('click', '.btn-borrar, .btn-editar', function () {
+            const $fila = $(this).closest('tr');
+
+            if ($(this).hasClass('btn-borrar')) {
+
+                $fila.remove();
+                $('#tablaDetalles tbody tr').each(function (i) {
+                    $(this).find('td:first').text(i + 1);
+                });
+                return;
+            }
+
+            if ($(this).hasClass('btn-editar')) {
+                const index = $fila.index();
+                const id_rqdet = $fila.data('id_rqdet') || 0;
+                const idProducto = $fila.find('td:eq(1)').text().trim();
+                const producto = $fila.find('td:eq(2)').text().trim();
+                const idfactor = $fila.find('td:eq(3)').text().trim();
+                const presentacion = $fila.find('td:eq(4)').text().trim();
+                const und = $fila.find('td:eq(5)').text().trim();
+                const cantidad = $fila.find('td:eq(6)').text().trim();
+                const fechaEntrega = $fila.find('td:eq(7)').text().trim();
+                const idAnalit = $fila.find('td:eq(8)').text().trim();
+                const destino = $fila.find('td:eq(9)').text().trim();
+                const observacion = $fila.find('td:eq(10)').text().trim();
+
+                $('#Producto').val(idProducto).trigger('change');
+                $('#UND').val(und);
+                $('#IdUND').val(idfactor);
+                $('select[name="Presentacion"]').val(idfactor).trigger('change');
+                $('#Cant').val(cantidad);
+                $('input[name="FechaEntrega"]').val(fechaEntrega);
+                $('select[name="Destino"]').val(idAnalit).trigger('change');
+                $('#Observacion').val(observacion);
+
+                $('#Producto').data('edit-id', id_rqdet);
+                $('#Producto').data('edit-index', index);
+
+                $fila.remove();
+            }
+        });
+
+        const form = document.getElementById('formRecojoRQ');
+
+        document.getElementById("formRecojoRQ").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const errores = [];
+
+            let totalFilas = $("#tablaDetalles tbody tr").length;
+
+            const fechaRegistro = document.querySelector('input[name="FechaRegistro"]').value;
+            const tipoOrden = document.querySelector('select[name="TipoOrdenC"]').value;
+            const empresa = document.querySelector('select[name="Empresa"]').value;
+            const usuAprueba = document.querySelector('select[name="UsuAprueba"]').value;
+            const tipoRq = document.querySelector('select[name="TipoRq"]').value;
+            const tituloRq = document.querySelector('input[name="TituloRq"]').value.trim();
+
+            if (!empresa) errores.push("Empresa");
+            if (!fechaRegistro) errores.push("Fecha de Registro");
+            if (!tipoOrden) errores.push("Tipo de Orden");
+            if (!usuAprueba) errores.push("Usuario que aprueba");
+            if (!tipoRq) errores.push("Tipo de Requerimiento");
+            if (!tituloRq) errores.push("Título de Requerimiento");
+
+            if (errores.length > 0) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Campos requeridos faltantes',
+                    html: `<ul style="text-align:left;">${errores.map(c => `<li>${c}</li>`).join('')}</ul>`,
+                    confirmButtonText: 'Aceptar'
+                });
+                return;
+            }
+
+            if (detalles.length === 0 || totalFilas === 0) {
+                Swal.fire("Advertencia", "Debe agregar al menos un detalle al requerimiento.", "warning");
+                return;
+            }
+
+            for (let i = 0; i < detalles.length; i++) {
+                const d = detalles[i];
+                if (!d.ProductoId || !d.IdFactor || !d.Cantidad || !d.FechaEntrega || !d.IdAnalit) {
+                    Swal.fire("Advertencia", `Faltan datos en el detalle N° ${i + 1}.`, "warning");
+                    return;
+                }
+            }
+
+            document.getElementById("detallesJson").value = JSON.stringify(detalles);
+
+            //form.submit();
+            const form = e.target;
+            const formData = new FormData(form);
+
+            $.ajax({
+                url: form.action,
+                type: form.method,
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Requerimiento guardado correctamente",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+
+                    // ✅ Cierra el modal
+                    $("#modalRQ").modal("hide");
+
+                    // Limpia los detalles del form
+                    detalles = [];
+                },
+                error: function (xhr) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error al guardar",
+                        text: xhr.responseText || "Ocurrió un error inesperado"
+                    });
+                }
+            });
+        });
+
+    });
+
+</script>

@@ -110,18 +110,41 @@
     <script src="~/adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
     <script src="~/adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
     <script>        
+        // function nuevoRequerimiento() {
+        //     window.modoInfo = false;
+        //     $.get('@Url.Action("RQAccion", "Requerimientos")', function (html) {
+        //         $("#contenedorModalRq").html(html);
+        //         $("#modalRQ").modal({
+        //             show: true,
+        //             backdrop: 'static', 
+        //             keyboard: false     
+        //         });
+        //     });
+
+        // }
         function nuevoRequerimiento() {
             window.modoInfo = false;
             $.get('@Url.Action("RQAccion", "Requerimientos")', function (html) {
                 $("#contenedorModalRq").html(html);
+
+                // 🔹 Inicializa el modal
                 $("#modalRQ").modal({
                     show: true,
-                    backdrop: 'static', 
-                    keyboard: false     
+                    backdrop: 'static',
+                    keyboard: false
+                });
+
+                // ✅ Inicializa los select2 dentro del modal inmediatamente después de cargar el HTML
+                $("#modalRQ").find('.select2bs42').select2({
+                    theme: 'bootstrap4',
+                    placeholder: 'Seleccione',
+                    allowClear: true,
+                    width: '100%',
+                    dropdownParent: $('#modalRQ')
                 });
             });
-
         }
+
 
         $(document).on('hidden.bs.modal', '#modalRQ', function () {
             $("#contenedorModalRq").html("");

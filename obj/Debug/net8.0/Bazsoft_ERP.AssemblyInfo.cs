@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Bazsoft_ERP")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+28c2668e2204a7d06401faa691269ab893d78dd3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0153dbe48f81c5944f96cccafa7cce0e820763b6")]
 [assembly: System.Reflection.AssemblyProductAttribute("Bazsoft_ERP")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Bazsoft_ERP")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
